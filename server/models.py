@@ -27,6 +27,22 @@ class User(db.model):
     
     def _repr__(self):
         return f'User: {self.username}, ID: {self.id}'
-    
-class
+
+
+class Game(db.Model, SerializerMixin):
+    __tablename__ = 'games'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.string(110), nullable=False)
+    genre = db.Column(db.string(50))
+    developer = db.Column(db.String(50))
+    release_date = db.Column(db.Date)
+
+    #Review relationship
+    reviews = db.relationship('Review', backref='game')
+
+    def __repr__(self):
+        return f'Game Title: {self.title}'
+
+
 
