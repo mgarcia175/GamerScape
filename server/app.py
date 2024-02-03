@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 
@@ -32,14 +32,24 @@ from models import User, Game, Review
 def index():
     return '<h1>Project Server</h1>'
 
+@app.route('/games')
+def games():
+    game_data = fetch_games()
+    return render_template('games.html', games=game_data)
 
-#API TEST
-@app.route('/test-igdb')
-def test_igdb():
-    access_token = "kftq7gz858kcl8mk0d1pow9yaq4e75" #Access Token that was obtained
-    games = fetch_games(access_token)
-    return jsonify(games)  # Convert the list of games to JSON and return it
-#API TEST
+
+
+
+
+
+
+# #API TEST
+# @app.route('/test-igdb')
+# def test_igdb():
+#     access_token = "kftq7gz858kcl8mk0d1pow9yaq4e75" #Access Token that was obtained
+#     games = fetch_games(access_token)
+#     return jsonify(games)  # Convert the list of games to JSON and return it
+# #API TEST
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -6,7 +6,7 @@ CLIENT_SECRET = os.getenv('IGDB_CLIENT_SECRET')
 
 def get_access_token():
     url = "https://id.twitch.tv/oauth2/token"
-    
+
     payload = {
         'client_id': os.getenv('IGDB_CLIENT_ID'),
         'client_secret': os.getenv('IGDB_CLIENT_SECRET'),
