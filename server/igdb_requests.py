@@ -1,10 +1,14 @@
+import os
+from dotenv import load_dotenv
 import requests
 
-def fetch_games(access_token):
+load_dotenv()
+
+def fetch_games():
     url = "https://api.igdb.com/v4/games"
     headers = {
-        "Client-ID": "wa7bs60p9egyilqkrc1ewfadfo0wf9",  # IGDB Client ID
-        "Authorization": f"Bearer {access_token}",
+        "Client-ID": os.getenv('IGDB_CLIENT_ID'),
+        "Authorization": f"Bearer {os.getenv('IGDB_ACCESS_TOKEN')}",
     }
     body = 'fields name, genres.name, platforms.name, summary; search "Sly Cooper"; limit 5;'
 
