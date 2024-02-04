@@ -4,7 +4,7 @@ function GamesList() {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/games')
+        fetch('/games')
             .then(response => response.json())
             .then(data => setGames(data))
             .catch(error => console.log('Oh nooo! Error fetching games. Sorry. | Details:', error));
