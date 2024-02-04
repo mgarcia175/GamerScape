@@ -5,3 +5,33 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+html, body { 
+  min-height: 100%;
+}
+
+body {
+  background-image: url('./images/GamerScape Background.webp');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+* {
+  margin-left: 0px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 30px;
+}

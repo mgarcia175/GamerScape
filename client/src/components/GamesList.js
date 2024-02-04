@@ -13,10 +13,10 @@ function GamesList() {
     return (
         <div>
             <h1>Games List</h1>
-            <ul>
+            <ul className="game-container">
                 {games.map((game, index) => (
                     <ul key={index}>
-                        <h3>{game.name}</h3>
+                        <h2>{game.name}</h2>
                         {game.cover_url && <img src={game.cover_url} alt={`Cover of ${game.name}`} />}
                     </ul>
                 ))}

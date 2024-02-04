@@ -15,7 +15,6 @@ def fetch_games():
     response = requests.post(url, headers=headers, data=body)
     
     if response.status_code == 200:
-
         games_data = response.json()
 
         for game in games_data:
