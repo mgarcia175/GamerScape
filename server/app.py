@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import Flask, request, render_template
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 
