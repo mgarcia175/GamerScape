@@ -7,6 +7,8 @@ function NavBar() {
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/games">Games</Link></li>
+        <li><Link to="/login">Log In</Link></li>
+
         {/* This is for more navigation paths */}
       </ul>
     </nav>

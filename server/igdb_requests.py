@@ -12,17 +12,21 @@ def fetch_games():
     }
     body = 'fields name, cover.image_id, platforms.name, summary; where platforms = (48,49,130,6); limit 20;'
 
-    response = requests.post(url, headers=headers, data=body)
-    
-    if response.status_code == 200:
-        games_data = response.json()
+    try:
+        response = requests.post(url, headers=headers, data=body)
 
-        for game in games_data:
-            cover_id = game.get('cover', {}).get('image_id')
+        if response.status_code == 200:
+            games_data = response.json()
 
-            game['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
+            for game in games_data:
+                cover_id = game.get('cover', {}).get('image_id')
 
-        return games_data
-    else:
-        print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
+                game['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
+
+            return games_data
+        else:
+            print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
         return None
