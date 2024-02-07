@@ -15,6 +15,7 @@ import GamesList from './GamesList';
 function App() {
   return (
     <Router>
+      <h1 id='app-title'>GamerScape</h1>
       <div>
         <NavBar />
         <Routes>
