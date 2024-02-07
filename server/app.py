@@ -9,7 +9,8 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_bcrypt import Bcrypt
+from flask import Flask
 # Local imports
 from dotenv import load_dotenv
 from igdb_requests import fetch_games
@@ -24,6 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
 api = Api(app)
 
 from models import User, Game, Review
@@ -40,11 +42,3 @@ def games():
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
-# #API TEST
-# @app.route('/test-igdb')
-# def test_igdb():
-#     access_token = "kftq7gz858kcl8mk0d1pow9yaq4e75" #Access Token that was obtained
-#     games = fetch_games(access_token)
-#     return jsonify(games)  # Convert the list of games to JSON and return it
-# #API TEST
