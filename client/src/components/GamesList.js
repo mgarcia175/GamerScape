@@ -12,15 +12,28 @@ function GamesList() {
 
     return (
         <div>
-            <h1>Games List</h1>
-            <ul className="game-container">
+            <h1 style={{textAlign: 'center'}}>Games List</h1>
+            <div className="game-container">
                 {games.map((game, index) => (
-                    <ul key={index}>
-                        <h2>{game.name}</h2>
-                        {game.cover_url && <img src={game.cover_url} alt={`Cover of ${game.name}`} />}
-                    </ul>
+                    <div key={index} className="game-plaque">
+                        {game.name && (
+                            <div className="game-title-plaque">
+                                <h2 className="game-title">{game.name}</h2>
+                            </div>
+                        )}
+                        {game.cover_url && (
+                            <div className="game-card">
+                                <img src={game.cover_url} alt={`Cover of ${game.name}`} className="game-image" />
+                            </div>
+                        )}
+                        {!game.cover_url && (
+                            <div className="game-card">
+                                <div className="game-placeholder">No Image Available</div>
+                            </div>
+                        )}
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }
