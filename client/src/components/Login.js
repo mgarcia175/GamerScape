@@ -28,38 +28,43 @@ const Login = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <h2>Log In</h2>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.username}
-        />
-        {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        />
-        {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
-      </div>
-      <button type="submit">Log In</button>
-    </form>
+    <div id="login-container">
+      <form onSubmit={formik.handleSubmit}>
+        <h2 id='login-title'>Log In</h2>
+        <div>
+          <label htmlFor="username">Username: </label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.username}
+          />
+          {formik.touched.username && formik.errors.username ? (
+            <div>{formik.errors.username}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="password">Password: </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </div>
+          <div id="button-container">
+          <button type="submit" id='login-button'>Log In</button>
+          </div>
+      </form>
+      <a href="#" id='signup-text'>Or sign up</a>
+    </div>
   );
 };
 
