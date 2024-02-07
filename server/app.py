@@ -30,6 +30,9 @@ migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 api = Api(app)
 
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+
 from models import User, Game, Review
 
 # Routes
