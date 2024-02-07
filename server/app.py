@@ -11,6 +11,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask import Flask
+
+
 # Local imports
 from dotenv import load_dotenv
 from igdb_requests import fetch_games
