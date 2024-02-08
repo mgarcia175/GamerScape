@@ -9,7 +9,7 @@ import {
 import Login from './Login';
 import Home from './Home';
 import NavBar from './NavBar';
-import GamesList from './GamesList';
+import AllGames from './AllGames';
 // Components
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route exact path='/' element={<Home />} />
-          <Route path='/games' element={<GamesList />} />
+          <Route path='/all-games' element={<AllGames />} />
           <Route path='/login' element={<Login />} />
           {/* Additional routes! */}
         </Routes>

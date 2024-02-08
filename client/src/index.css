@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 :root {
   --bg: #282c34;
   --header: #fff;
@@ -7,6 +9,17 @@
 
 html, body { 
   min-height: 100%;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.668);
+  z-index: -1; /* Overlay is behind other content */
 }
 
 body {
@@ -31,6 +44,17 @@ h1 {
   text-align: center;
 }
 
+#app-title {
+  font-size: 70px;
+  font-family: 'Montserrat', sans-serif;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  color: transparent; 
+  -webkit-text-stroke: 2px rgba(199, 65, 7, 0.484); /* Apply a stroke with a slight blur */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+  backdrop-filter: blur(5px);
+}
+
 nav {
   display: flex;
   justify-content: center;
@@ -40,7 +64,7 @@ nav {
   border-top: 2px solid silver;
   border-bottom: 2px solid silver;
   font-size: 1.5em;
-  margin-top: 20px;
+  
   margin-bottom: 50px;
 }
 
@@ -62,7 +86,11 @@ nav a {
 }
 
 nav a:hover {
-  color: #007bff;
+  color: #0672ee;
+}
+
+#games-list-title{
+  margin-bottom: 60px;
 }
 
 .game-container {
@@ -72,39 +100,40 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
+.game-info-container {
+  background-color: #000000c5;
+  padding: 10px;
+  margin-top: -10px;
+  width: 100%;
+}
+
 .game-card {
-  width: 450px;
-  height: 750px;
-  background-color: #fff;
-  margin: 70px;
+  max-width: 350px;
+  max-height: 450px;
+  min-width: 350px;
+  min-height: 450px;
+  margin: 90px;
   border-radius: 10px;
   position: relative;
 }
 
-.game-title-plaque {
-  background-color: #f0f0f0;
-  padding: 10px;
-  margin-bottom: -15px;
-  border-radius: 10px;
-  text-align: center;
-  margin-right: 10px;
-}
-
-.game-plaque {
-  margin-bottom: 70px;
-}
-
-.game-title {
-  font-size: 1.5em;
+.game-title{
+  margin-top: 10px;
   margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
 }
 
 .game-image {
   width: 100%;
-  border-radius: 5px;
+  height: auto;
+  border-radius: 10px 10px 0 0;
 }
 
 .game-placeholder {
+  max-width: 350px;
+  max-height: 450px;
+  min-width: 350px;
+  min-height: 450px;
   background-color: rgb(44, 42, 42);
   color: white;
   font-size: 1.5em;
@@ -113,8 +142,6 @@ nav a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
 #login-container {
@@ -130,8 +157,7 @@ nav a:hover {
   border-radius: 15px;
   font-size: 23px;
   text-align: center;
-  color: rgb(196, 50, 6);
-  font-weight: bold;
+  color: rgb(192, 58, 13);
 }
 
 #login-container input {

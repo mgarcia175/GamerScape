@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function GamesList() {
+function AllGames() {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
@@ -12,25 +12,25 @@ function GamesList() {
 
     return (
         <div>
-            <h1 style={{textAlign: 'center'}}>Games List</h1>
+            <h1>All Games</h1>
             <div className="game-container">
                 {games.map((game, index) => (
-                    <div key={index} className="game-plaque">
-                        {game.name && (
-                            <div className="game-title-plaque">
-                                <h2 className="game-title">{game.name}</h2>
-                            </div>
-                        )}
+                    <div key={index} className="game-card">
                         {game.cover_url && (
-                            <div className="game-card">
+                            <div className="game-image-container">
                                 <img src={game.cover_url} alt={`Cover of ${game.name}`} className="game-image" />
                             </div>
                         )}
                         {!game.cover_url && (
-                            <div className="game-card">
-                                <div className="game-placeholder">No Image Available</div>
-                            </div>
+                            <div className="game-placeholder">No Image Available</div>
                         )}
+                        <div className="game-info-container">
+                            <h2 className="game-title">{game.name}</h2>
+
+                            <p>Release Date: {game.release_date}</p>
+                            <p>Genre: {game.genre}</p>
+                            {/* More info */}
+                        </div>
                     </div>
                 ))}
             </div>
@@ -38,4 +38,4 @@ function GamesList() {
     );
 }
 
-export default GamesList;
+export default AllGames;

@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
-// Implementing validation with yup -- requiring password and username along with requiring strings.
 const validationSchema = yup.object({
   username: yup.string().required('Username required'),
   password: yup.string().required('Password required'),
@@ -12,7 +11,6 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
-  // useFormik hook to manage form state
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -21,9 +19,8 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: values => {
       console.log('Login submitted with:', values);
-      // Here you would typically authenticate the user
-      // For demonstration, navigate to another route upon successful submission
-      navigate('/dashboard'); // Change '/dashboard' to your desired route
+
+      navigate('/dashboard'); // Change '/dashboard' to desired route
     },
   });
 
