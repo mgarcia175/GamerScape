@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -7,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const validationSchema = yup.object({
   username: yup.string().required('Username required'),
   password: yup.string().required('Password required'),
+
 });
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -19,16 +19,18 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log('Login submitted with:', values);
+      console.log('Signup submitted with:', values);
 
-      navigate('/'); // Change '/dashboard' to desired route
+
+
+      navigate('/signup'); // desired route after signup
     },
   });
 
   return (
-    <div id="login-container">
+    <div id="signup-container">
       <form onSubmit={formik.handleSubmit}>
-        <h2 id='login-title'>Log In</h2>
+        <h2 id='signup-title'>Sign Up</h2>
         <div>
           <label htmlFor="username">Username: </label>
           <input
@@ -57,13 +59,13 @@ const Login = () => {
             <div>{formik.errors.password}</div>
           ) : null}
         </div>
+        {/* Add more fields for signing up if needed */}
         <div id="button-container">
-          <button type="submit" id='login-button'>Log In</button>
+          <button type="submit" id='signup-button'>Sign Up</button>
         </div>
       </form>
-      <Link to="/signup" id='signup-text'>Or sign up</Link>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

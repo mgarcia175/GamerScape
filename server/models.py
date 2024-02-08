@@ -1,6 +1,7 @@
 from db import db
 from sqlalchemy_serializer import SerializerMixin
-from app import bcrypt
+from extensions import bcrypt
+from sqlalchemy.orm import validates
 
 # Models
 class User(db.Model, SerializerMixin):
@@ -19,8 +20,22 @@ class User(db.Model, SerializerMixin):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
     
-    def _repr__(self):
+    def __repr__(self):
         return f'User: {self.username}, ID: {self.id}'
+    
+    @validates('username')
+    def validate_username(self, key, username):
+
+        if len(username) < 3:
+            raise ValueError("Username must be at least 3 characters long")
+        return username
+
+    @validates('email')
+    def validate_email(self, key, email):
+
+        if not email or '@' not in email:
+            raise ValueError("Invalid email format. Please try again.")
+        return email
 
 class Game(db.Model, SerializerMixin):
     __tablename__ = 'games'

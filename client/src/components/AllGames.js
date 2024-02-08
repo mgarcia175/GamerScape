@@ -22,7 +22,7 @@ function AllGames() {
                             </div>
                         )}
                         {!game.cover_url && (
-                            <div className="game-placeholder">No Image Available</div>
+                            <div className="game-placeholder">Image not available</div>
                         )}
                         <div className="game-info-container">
                             <h2 className="game-title">{game.name}</h2>

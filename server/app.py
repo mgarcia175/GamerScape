@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from igdb_requests import fetch_games
 from flask import jsonify
 
+from extensions import bcrypt
+
 load_dotenv()
 
 from config import app
