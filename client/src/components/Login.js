@@ -21,14 +21,14 @@ const Login = () => {
     onSubmit: values => {
       console.log('Login submitted with:', values);
 
-      navigate('/'); // Change '/dashboard' to desired route
+      navigate('/');
     },
   });
 
   return (
     <div id="login-container">
       <form onSubmit={formik.handleSubmit}>
-        <h2 id='login-title'>Log In</h2>
+        <h2 id='login-title'>Login</h2>
         <div>
           <label htmlFor="username">Username: </label>
           <input
@@ -39,9 +39,9 @@ const Login = () => {
             onBlur={formik.handleBlur}
             value={formik.values.username}
           />
-          {formik.touched.username && formik.errors.username ? (
-            <div>{formik.errors.username}</div>
-          ) : null}
+          {formik.touched.username && formik.errors.username && (
+            <div id="error-message">{formik.errors.username}</div>
+          )}
         </div>
         <div>
           <label htmlFor="password">Password: </label>
@@ -53,15 +53,18 @@ const Login = () => {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          {formik.touched.password && formik.errors.password ? (
-            <div>{formik.errors.password}</div>
-          ) : null}
+          {formik.touched.password && formik.errors.password && (
+            <div id="error-message">{formik.errors.password}</div>
+          )}
         </div>
         <div id="button-container">
-          <button type="submit" id='login-button'>Log In</button>
+          <button type="submit" id='login-button'>Login</button>
         </div>
       </form>
-      <Link to="/signup" id='signup-text'>Or sign up</Link>
+      <div id="signup-link-container">
+        <span className='signup-text'>Don't have an account? </span>
+        <Link to="/signup" className="signup-text">Sign up!</Link>
+      </div>
     </div>
   );
 };

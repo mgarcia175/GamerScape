@@ -205,3 +205,70 @@ nav a:hover {
   font-size: 17px;
   text-decoration: none;
 }
+
+#signup-container {
+  border: 4px solid silver;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  backdrop-filter: blur(5px);
+  max-width: 600px;
+  margin: auto;
+  border-radius: 15px;
+  font-size: 23px;
+  text-align: center;
+  color: rgb(157, 152, 233);
+  font-weight: bold;
+}
+
+#signup-container input {
+  opacity: 0.8; 
+  background-color: rgba(7, 7, 7, 0.8);
+  margin: 5px 0;
+  padding: 5px;
+}
+
+#signup-title {
+  justify-content: center;
+  display: flex;
+  padding-bottom: 15px;
+  font-size: 60px;
+  position: relative;
+  top: -35px;
+  color: #dcdddc;
+}
+
+#signup-button {
+  font-size: 23px;
+  background-color: #5f5c5a;
+  margin-top: 15px;
+  border-radius: 15px;
+  font-size: 1em;
+  padding: 10px 10px;
+  border: 2px solid;
+  border-color: #000000;
+}
+
+#signup-button:hover {
+  background-color: rgb(25, 23, 23);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+#signup-button:active {
+  background-color: #2a2c2e;
+  transform: scale(1);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.signup-text {
+  color: #643709;
+  font-size: 0.6em;
+}

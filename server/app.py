@@ -1,23 +1,23 @@
 import os
-
 from dotenv import load_dotenv
-from igdb_requests import fetch_games
 from flask import jsonify
+from igdb_requests import fetch_games
+from models import User
 
-from extensions import bcrypt
+from config import app, api, db
+from resources.signup import Signup
 
+# Load environment variables
 load_dotenv()
 
-from config import app
+# API Resource Routes
+api.add_resource(Signup, '/api/signup')
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
-from models import User, Game, Review
 
-# Routes
 @app.route('/')
 def index():
-    return '<h1>Project Server</h1>'
+    return '<h1>Welcome to the Project Server</h1>'
 
 @app.route('/games', methods=['GET'])
 def games():
