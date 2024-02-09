@@ -5,13 +5,20 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
+import os
 
+#Environment variable
+from dotenv import load_dotenv
+load_dotenv()
 
 # Instantiate app, set attributes
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
+
+# Secret key from .env
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Define metadata, instantiate db
 metadata = MetaData(naming_convention={
