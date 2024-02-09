@@ -1,6 +1,5 @@
-from db import db
 from sqlalchemy_serializer import SerializerMixin
-from extensions import bcrypt
+from config import db, bcrypt
 from sqlalchemy.orm import validates
 
 # Models
