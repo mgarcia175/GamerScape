@@ -6,6 +6,7 @@ from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 
+
 # Instantiate app, set attributes
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'

@@ -15,11 +15,6 @@ api.add_resource(Signup, '/api/signup')
 
 
 
-@app.route('/games', methods=['GET'])
-def games():
-    game_data = fetch_games()
-    return jsonify(game_data)
-
 @app.route('/')
 def index():
     return '<h1>Welcome to the Project Server</h1>'

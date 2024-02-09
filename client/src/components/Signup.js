@@ -20,7 +20,7 @@ const Signup = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      fetch('http://localhost:5555/api/signup', {
+      fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
