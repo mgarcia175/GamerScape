@@ -7,8 +7,10 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), index=True, unique=True, nullable=False)
+    first_name = db.Column(db.String(30), nullable=False)
+    last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(100), index=True, unique=True, nullable=False)
+    username = db.Column(db.String(40), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
 
     reviews = db.relationship('Review', backref='author')

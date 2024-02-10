@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import jsonify
 from igdb_requests import fetch_games
-from models import User
+# from models import User
 
 from config import app, api, db
 from resources.signup import Signup
