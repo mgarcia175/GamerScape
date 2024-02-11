@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function AllGames() {
     const [games, setGames] = useState([]);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetch('/games')
@@ -9,6 +13,10 @@ function AllGames() {
             .then(data => setGames(data))
             .catch(error => console.log('Oh nooo! Error fetching games. Sorry. | Details:', error));
     }, []);
+
+    const handleSeeMore = (gameId) => {
+        navigate(`/games/${gameId}`);
+    };
 
     return (
         <div>
@@ -26,10 +34,9 @@ function AllGames() {
                         )}
                         <div className="game-info-container">
                             <h2 className="game-title">{game.name}</h2>
-
-                            <p>Release Date: {game.release_date}</p>
-                            <p>Genre: {game.genre}</p>
-                            {/* More info */}
+                            <p>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
+                            <p>Genre: {game.genres ? game.genres.map(genre => genre.name).join(', '): 'N/A'}</p>
+                            <button onClick={() => handleSeeMore(game.id)} className="see-more-button">See more!</button>
                         </div>
                     </div>
                 ))}

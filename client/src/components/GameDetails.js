@@ -7,9 +7,17 @@ function GameDetails() {
 
     useEffect(() => {
         fetch(`/games/${gameId}`)
-            .then(response => response.json())
-            .then(data => setGame(data))
-            .catch(error => console.log('Oh nooo! Error fetching game details. Sorry. | Details:', error));
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch game details');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const gameData = data[0];
+                setGame(gameData);
+            })
+            .catch(error => console.error('Error fetching game details:', error));
     }, [gameId]);
 
     return (
@@ -17,6 +25,7 @@ function GameDetails() {
             {game ? (
                 <div>
                     <h1>{game.name}</h1>
+                    {game.cover && <img src={game.cover.url} alt={game.name} />}
                     <p>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
                     <p>Genres: {game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</p>
                     <p>Summary: {game.summary || 'N/A'}</p>

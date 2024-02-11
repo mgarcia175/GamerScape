@@ -42,6 +42,7 @@ body {
 
 h1 {
   text-align: center;
+  margin-bottom: 70px;
 }
 
 #app-title {
@@ -111,7 +112,9 @@ nav a:hover {
   max-height: 450px;
   min-width: 350px;
   min-height: 450px;
-  margin: 90px;
+  margin-left: 90px;
+  margin-right: 90px;
+  margin-bottom: 300px;
   position: relative;
 }
 
@@ -271,4 +274,14 @@ nav a:hover {
 .signup-text {
   color: #643709;
   font-size: 0.6em;
+}
+
+.see-more-button {
+  font-size: 23px;
+  margin-top: 15px;
+  border-radius: 7px;
+  font-size: 1em;
+  padding: 10px 10px;
+  border: 2px solid;
+  color: #000000;
 }

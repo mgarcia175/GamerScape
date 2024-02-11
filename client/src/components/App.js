@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { 
   BrowserRouter as Router, 
   Routes,
@@ -11,6 +11,7 @@ import Signup from './Signup';
 import Home from './Home';
 import NavBar from './NavBar';
 import AllGames from './AllGames';
+import GameDetails from './GameDetails';
 // Components
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
           <Route path='/all-games' element={<AllGames />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/games/:gameId' element={<GameDetails />} />
+
           {/* Additional routes! */}
         </Routes>
       </div>

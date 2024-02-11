@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import jsonify
-from igdb_requests import fetch_games
+from igdb_requests import fetch_games, fetch_game_details
 # from models import User
 
 from config import app, api, db
@@ -23,6 +23,11 @@ def index():
 def games():
     game_data = fetch_games()
     return jsonify(game_data)
+
+@app.route('/games/<int:game_id>')
+def get_game_details(game_id):
+    game_details = fetch_game_details(game_id)
+    return jsonify(game_details)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

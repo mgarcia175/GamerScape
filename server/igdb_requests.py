@@ -4,13 +4,27 @@ import requests
 
 load_dotenv()
 
+def handle_api_response(response):
+    try:
+        response_data = response.json()
+
+        if isinstance(response_data, list):
+            for item in response_data:
+                pass
+        else:
+            pass
+
+    except Exception as e:
+        print(f"An error occurred while handling the API response: {str(e)}")
+
+
 def fetch_games():
     url = "https://api.igdb.com/v4/games"
     headers = {
         "Client-ID": os.getenv('IGDB_CLIENT_ID'),
         "Authorization": f"Bearer {os.getenv('IGDB_ACCESS_TOKEN')}",
     }
-    body = 'fields name, cover.image_id, platforms.name, summary; where platforms = (48,49,130,6); limit 20;'
+    body = 'fields name, cover.image_id, platforms.name, genres.name; where platforms = (48,49,130,6); limit 20;'
 
     try:
         response = requests.post(url, headers=headers, data=body)
@@ -20,10 +34,31 @@ def fetch_games():
 
             for game in games_data:
                 cover_id = game.get('cover', {}).get('image_id')
-
                 game['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
 
             return games_data
+        else:
+            print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return None
+
+def fetch_game_details(game_id):
+    url = f"https://api.igdb.com/v4/games/{game_id}"
+    headers = {
+        "Client-ID": os.getenv('IGDB_CLIENT_ID'),
+        "Authorization": f"Bearer {os.getenv('IGDB_ACCESS_TOKEN')}",
+    }
+    params = {
+        'fields': 'name, cover.url, platforms.name, genres.name, summary'
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            handle_api_response(response)
+            return response.json()
         else:
             print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
             return None
