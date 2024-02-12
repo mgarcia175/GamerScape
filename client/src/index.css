@@ -285,3 +285,47 @@ nav a:hover {
   border: 2px solid;
   color: #000000;
 }
+
+#see-more-game-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.see-more-game-details-container {
+  width: 80%;
+  background-color: #0b091ecf;
+  padding: 50px;
+}
+
+.see-more-game-info-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.see-more-game-image-container {
+  flex: 0 0 auto;
+  margin-right: 20px;
+
+}
+
+.see-more-game-image-details {
+  max-width: 450px;
+  max-height: 450px;
+  min-width: 450px;
+  min-height: 450px;
+}
+
+.see-more-game-info {
+  flex: 1;
+}
+
+.see-more-game-title-details {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.see-more-game-info p {
+  margin-bottom: 5px;
+}
+

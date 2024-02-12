@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from config import db, bcrypt
 from sqlalchemy.orm import validates
+from datetime import datetime
 
 # Models
 class User(db.Model, SerializerMixin):
@@ -11,7 +12,9 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(40), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
 
+    # Relationships
     reviews = db.relationship('Review', backref='author')
+    favorites = db.relationship('Favorite', backref='user')
 
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -24,32 +27,26 @@ class User(db.Model, SerializerMixin):
     
     @validates('username')
     def validate_username(self, key, username):
-
         if len(username) < 3:
             raise ValueError("Username must be at least 3 characters long")
         return username
 
     @validates('email')
     def validate_email(self, key, email):
-
         if not email or '@' not in email:
             raise ValueError("Invalid email format. Please try again.")
         return email
 
-class Game(db.Model, SerializerMixin):
-    __tablename__ = 'games'
+class Favorite(db.Model, SerializerMixin):
+    __tablename__ = 'favorites'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(110), nullable=False)
-    genre = db.Column(db.String(50))
-    developer = db.Column(db.String(50))
-    release_date = db.Column(db.Date)
-
-    #Review relationship
-    reviews = db.relationship('Review', backref='game')
+    igdb_game_id = db.Column(db.Integer, nullable=False)  # ID from my api - IGDB
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow) 
 
     def __repr__(self):
-        return f'Game Title: {self.title}'
+        return f'Favorite ID: {self.id}, IGDB Game ID: {self.igdb_game_id}, User ID: {self.user_id}'
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
@@ -58,7 +55,7 @@ class Review(db.Model, SerializerMixin):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
+    igdb_game_id = db.Column(db.Integer, nullable=False)  # Use IGDB game ID 
 
     def __repr__(self):
-        return f'Review ID {self.id} by {self.user_id}| Game: {self.game_id} '
+        return f'Review ID {self.id} by User ID {self.user_id} for IGDB Game ID: {self.igdb_game_id}'
