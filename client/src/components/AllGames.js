@@ -15,7 +15,7 @@ function AllGames() {
     }, []);
 
     const handleSeeMore = (gameId) => {
-        navigate(`/review/${gameId}`);
+        navigate(`/games/${gameId}`);
     };
 
     return (
@@ -34,8 +34,8 @@ function AllGames() {
                         )}
                         <div className="game-info-container">
                             <h2 className="game-title">{game.name}</h2>
-                            <p>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
-                            <p>Genre: {game.genres ? game.genres.map(genre => genre.name).join(', '): 'N/A'}</p>
+                            <p className='info-section'>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
+                            <p className='info-section'>Genre: {game.genres ? game.genres.map(genre => genre.name).join(', '): 'N/A'}</p>
                             <button onClick={() => handleSeeMore(game.id)} className="see-more-button">See more!</button>
                         </div>
                     </div>

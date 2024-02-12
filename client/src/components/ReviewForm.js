@@ -58,7 +58,7 @@ const ReviewForm = () => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div>
-                <label htmlFor="difficulty">Difficulty (1-5): </label>
+                <label htmlFor="difficulty" className='info-section'>Difficulty (1-5): </label>
                 <input
                     id="difficulty"
                     name="difficulty"
@@ -71,7 +71,7 @@ const ReviewForm = () => {
             </div>
 
             <div>
-                <label htmlFor="graphics">Graphics (1-5): </label>
+                <label htmlFor="graphics" className='info-section'>Graphics (1-5): </label>
                 <input
                     id="graphics"
                     name="graphics"
@@ -84,7 +84,7 @@ const ReviewForm = () => {
             </div>
 
             <div>
-                <label htmlFor="gameplay">Gameplay (1-5): </label>
+                <label htmlFor="gameplay" className='info-section'>Gameplay (1-5): </label>
                 <input
                     id="gameplay"
                     name="gameplay"
@@ -97,7 +97,7 @@ const ReviewForm = () => {
             </div>
 
             <div>
-                <label htmlFor="storyline">Storyline (1-5): </label>
+                <label htmlFor="storyline" className='info-section'>Storyline (1-5): </label>
                 <input
                     id="storyline"
                     name="storyline"
