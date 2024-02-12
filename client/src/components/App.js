@@ -12,6 +12,7 @@ import Home from './Home';
 import NavBar from './NavBar';
 import AllGames from './AllGames';
 import GameDetails from './GameDetails';
+import ReviewForm from './ReviewForm';
 // Components
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/games/:gameId' element={<GameDetails />} />
-
+          <Route path="/review/:gameId" element={<ReviewForm />} />
           {/* Additional routes! */}
         </Routes>
       </div>

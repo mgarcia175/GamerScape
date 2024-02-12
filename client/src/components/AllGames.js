@@ -15,7 +15,7 @@ function AllGames() {
     }, []);
 
     const handleSeeMore = (gameId) => {
-        navigate(`/games/${gameId}`);
+        navigate(`/review/${gameId}`);
     };
 
     return (

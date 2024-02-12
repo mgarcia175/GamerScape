@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function GameDetails() {
+    const navigate = useNavigate()
     const { gameId } = useParams();
     const [game, setGame] = useState(null);
-    const [review, setReview] = useState('');
-    
-    const handleReviewSubmit = () => {
-        // Handle review submission logic here
-        console.log('Review submitted:', review);
-        // Clear the review input after submission
-        setReview('');
-    };
+
 
     useEffect(() => {
         fetch(`/games/${gameId}`)
@@ -24,14 +18,24 @@ function GameDetails() {
             .then(data => {
                 const gameData = data[0];
                 setGame(gameData);
-                console.log(gameData);
             })
             .catch(error => console.error('Error fetching game details:', error));
     }, [gameId]);
 
+function handleAddToFavorites() {
+
+}
+
+function handleLeaveAReview() {
+    navigate(`/review/${gameId}`);
+}
     return (
         <div id='see-more-game-container'>
             <div className='see-more-game-details-container'>
+                        <div id='review-and-favorites-button'>
+                            <button onClick={handleAddToFavorites}>Add to favorites</button>
+                            <button onClick={handleLeaveAReview}>Leave a Review</button>
+                        </div>
                 {game ? (
                     <div className='see-more-game-info-container'>
                         <div className='see-more-game-image-container'>
@@ -43,12 +47,6 @@ function GameDetails() {
                                 <p><strong>Platforms:</strong> {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
                                 <p><strong>Genres:</strong> {game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</p>
                                 <p><strong>Summary:</strong> {game.summary || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <h3>Leave a Review</h3>
-                                <textarea value={review} onChange={(e) => setReview(e.target.value)} rows={4} cols={50} placeholder="Write your review here..."></textarea>
-                                <br />
-                                <button onClick={handleReviewSubmit}>Submit Review</button>
                             </div>
                         </div>
                     </div>
