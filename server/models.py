@@ -48,14 +48,13 @@ class Favorite(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Favorite ID: {self.id}, IGDB Game ID: {self.igdb_game_id}, User ID: {self.user_id}'
 
-class Review(db.Model, SerializerMixin):
-    __tablename__ = 'reviews'
-
+class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.Integer, nullable=False)
-    comment = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    igdb_game_id = db.Column(db.Integer, nullable=False)  # Use IGDB game ID 
-
-    def __repr__(self):
-        return f'Review ID {self.id} by User ID {self.user_id} for IGDB Game ID: {self.igdb_game_id}'
+    igdb_game_id = db.Column(db.Integer, nullable=False)
+    difficulty = db.Column(db.Integer, nullable=False)  # Assuming difficulty is an integer
+    graphics = db.Column(db.Integer, nullable=False)
+    gameplay = db.Column(db.Integer, nullable=False)
+    storyline = db.Column(db.Integer, nullable=False)
+    review = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

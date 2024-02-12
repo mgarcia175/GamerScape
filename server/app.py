@@ -2,8 +2,9 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
-from models import User, Review
+from models import User, Review, Favorite
 from config import app, db, bcrypt
+from igdb_requests import fetch_games, fetch_game_details
 
 # Load environment variables
 load_dotenv()
@@ -23,13 +24,13 @@ def index():
 
 @app.route('/games', methods=['GET'])
 def games():
-    # Implementation for fetching games
-    return jsonify({'message': 'Games endpoint'})
+    games_data = fetch_games()
+    return jsonify(games_data)
 
-@app.route('/games/<int:game_id>')
-def get_game_details(game_id):
-    # Implementation for fetching game details
-    return jsonify({'message': 'Game details endpoint'})
+@app.route('/api/games/<int:game_id>', methods=['GET'])
+def game_details(game_id):
+    game_detail = fetch_game_details(game_id)
+    return jsonify(game_detail)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -55,28 +56,27 @@ def submit_review():
     if 'user_id' not in session:
         return jsonify({'message': 'Authentication required'}), 401
 
-    data = request.get_json()
-    user_id = session.get('user_id')
-    igdb_game_id = data.get('igdb_game_id')
-    rating = data.get('rating')
-    comment = data.get('comment')
-
-    if not all([igdb_game_id, rating, comment]):
-        return jsonify({'message': 'Missing data for review submission'}), 400
-
-    new_review = Review(
-        user_id=user_id,
-        igdb_game_id=igdb_game_id,
-        rating=rating,
-        comment=comment
-    )
-    db.session.add(new_review)
     try:
+        data = request.get_json()
+        user_id = session.get('user_id')
+
+        new_review = Review(
+            user_id=user_id,
+            igdb_game_id=data.get('igdb_game_id'),
+            difficulty=data.get('difficulty'),
+            graphics=data.get('graphics'),
+            gameplay=data.get('gameplay'),
+            storyline=data.get('storyline'),
+            review=data.get('review')
+        )
+        db.session.add(new_review)
         db.session.commit()
         return jsonify({'message': 'Review submitted successfully'}), 201
     except Exception as e:
         db.session.rollback()
+        app.logger.error(f'Error submitting review: {str(e)}')  # Log the error for debugging
         return jsonify({'message': 'Error submitting review', 'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

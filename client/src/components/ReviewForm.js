@@ -23,11 +23,6 @@ const ReviewForm = () => {
             review: Yup.string().required('Required'),
         }),
         onSubmit: (values, { setSubmitting }) => {
-            const reviewData = {
-                ...values,
-                igdb_game_id: gameId,
-            };
-
             fetch('/api/reviews', {
                 method: 'POST',
                 headers: {
@@ -35,8 +30,11 @@ const ReviewForm = () => {
                 },
                 body: JSON.stringify({
                     igdb_game_id: gameId,
-                    rating: values.rating,
-                    comment: values.comment,
+                    difficulty: values.difficulty,
+                    graphics: values.graphics,
+                    gameplay: values.gameplay,
+                    storyline: values.storyline,
+                    review: values.review,
                 }),
                 credentials: 'include',
             })

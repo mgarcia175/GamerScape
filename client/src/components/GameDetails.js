@@ -8,7 +8,7 @@ function GameDetails() {
 
 
     useEffect(() => {
-        fetch(`/games/${gameId}`)
+        fetch(`/api/games/${gameId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch game details');
