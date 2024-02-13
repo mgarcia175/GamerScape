@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ScreenshotGallery from './ScreenshotGallery';
 
 function GameDetails() {
     const navigate = useNavigate()
@@ -29,33 +30,38 @@ function handleAddToFavorites() {
 function handleLeaveAReview() {
     navigate(`/review/${gameId}`);
 }
-    return (
-        <div id='see-more-game-container'>
-            <div className='see-more-game-details-container'>
-                        <div id='review-and-favorites-button'>
-                            <button onClick={handleAddToFavorites}>Add to favorites</button>
-                            <button onClick={handleLeaveAReview}>Leave a Review</button>
-                        </div>
-                {game ? (
-                    <div className='see-more-game-info-container'>
-                        <div className='see-more-game-image-container'>
-                            {game.cover && <img className='see-more-game-image-details' src={game.cover.url} alt={game.name} />}
-                        </div>
-                        <div className='see-more-game-info'>
-                            <h1 className='see-more-game-title-details'>{game.name}</h1>
-                            <div>
-                                <p className='info-section'>Platforms: <span className="info-text">{game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</span></p>
-                                <p className='info-section'>Genres: <span className="info-text">{game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</span></p>
-                                <p className='info-section'>Summary: <span className="info-text">{game.summary || 'N/A'}</span></p>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )}
+
+return (
+    <div id='see-more-game-container'>
+        <div className='see-more-game-details-container'>
+            <div id='review-and-favorites-button'>
+                <button onClick={handleAddToFavorites}>Add to Favorites</button>
+                <button onClick={handleLeaveAReview}>Leave a Review</button>
             </div>
+            {game ? (
+                <div className='see-more-game-info-container'>
+                    <div className='see-more-game-image-container'>
+                        {game.cover && <img className='see-more-game-image-details' src={game.cover_url} alt={game.name} />}
+                    </div>
+                    <div className='see-more-game-info'>
+                        <h1 className='see-more-game-title-details'>{game.name}</h1>
+                        <div>
+                            <p className='info-section'>Release Date: <span className="info-text">{game.first_release_date ? new Date(game.first_release_date * 1000).toLocaleDateString() : 'N/A'}</span></p>
+                            <p className='info-section'>Platforms: <span className="info-text">{game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</span></p>
+                            <p className='info-section'>Genres: <span className="info-text">{game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</span></p>
+                            <p className='info-section'>Summary: <span className="info-text">{game.summary || 'N/A'}</span></p>
+                        </div>
+                        {game.screenshot_urls && (
+                            <ScreenshotGallery screenshotUrls={game.screenshot_urls} /> // Use the ScreenshotGallery component
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <p>Loading...</p>
+            )}
         </div>
-    );
+    </div>
+);
 }
 
 export default GameDetails;

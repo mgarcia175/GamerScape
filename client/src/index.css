@@ -157,8 +157,8 @@ nav a:hover {
 
 .info-text {
   font-weight: normal;
-  font-size: 0.8em;
-  color: #000000; 
+  font-size: 1em;
+  color: #ffffff; 
 }
 
 #login-container {
@@ -326,17 +326,18 @@ nav a:hover {
 
 .see-more-game-image-details {
   max-width: 450px;
-  max-height: 450px;
+  max-height: 550px;
   min-width: 450px;
-  min-height: 450px;
+  min-height: 550px;
 }
 
 .see-more-game-info {
   flex: 1;
+  color: #2d6fa9;
 }
 
 .see-more-game-title-details {
-  font-size: 24px;
+  font-size: 50px;
   margin-bottom: 10px;
 }
 
@@ -347,6 +348,8 @@ nav a:hover {
 #review-and-favorites-button {
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  top: -20px;
 }
 
 #review-and-favorites-button button {
@@ -362,3 +365,58 @@ nav a:hover {
 #review-and-favorites-button button:hover {
   background-color: #34495e;
 }
+
+
+.screenshot-gallery {
+  width: 100%;
+  padding: 20px;
+}
+
+.gallery {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.gallery-inner {
+  overflow: hidden;
+  display: flex;
+  transition: transform 0.5s ease;
+  justify-content: center;
+}
+
+.screenshot-container {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.screenshot {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+.nav-buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-buttons button {
+  background-color: rgba(114, 108, 108, 0.496);
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-buttons button:hover {
+  background-color: rgba(36, 28, 28, 0.5);
+}
+

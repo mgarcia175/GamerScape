@@ -17,7 +17,6 @@ def handle_api_response(response):
     except Exception as e:
         print(f"An error occurred while handling the API response: {str(e)}")
 
-
 def fetch_games():
     url = "https://api.igdb.com/v4/games"
     headers = {
@@ -51,17 +50,31 @@ def fetch_game_details(game_id):
         "Authorization": f"Bearer {os.getenv('IGDB_ACCESS_TOKEN')}",
     }
     params = {
-        'fields': 'name, cover.url, platforms.name, genres.name, summary'
+        'fields': 'name, cover.image_id, platforms.name, genres.name, summary, first_release_date, screenshots.image_id'
     }
 
     try:
         response = requests.get(url, headers=headers, params=params)
         if response.status_code == 200:
-            handle_api_response(response)
-            return response.json()
+            game_data = response.json()
+            cover_id = game_data[0].get('cover', {}).get('image_id')
+            game_data[0]['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
+            
+            # Extract screenshot URLs
+            screenshot_urls = []
+            if 'screenshots' in game_data[0]:
+                for screenshot in game_data[0]['screenshots']:
+                    image_id = screenshot.get('image_id')
+                    if image_id:
+                        screenshot_url = f"https://images.igdb.com/igdb/image/upload/t_screenshot_med/{image_id}.jpg"
+                        screenshot_urls.append(screenshot_url)
+            game_data[0]['screenshot_urls'] = screenshot_urls
+            
+            return game_data
         else:
             print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
             return None
     except Exception as e:
         print(f"An error occurred: {str(e)}")
         return None
+
