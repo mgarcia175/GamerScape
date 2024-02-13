@@ -17,6 +17,35 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 # API Resource Routes
 
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    json_data = request.get_json()
+
+    if User.query.filter((User.username == json_data.get('username')) | (User.email == json_data.get('email'))).first():
+        return jsonify({"message": "A user with that username or email already exists"}), 409
+
+    try:
+        user = User(
+            username=json_data.get('username'),
+            email=json_data.get('email')
+        )
+        user.set_password(json_data.get('password'))
+
+        db.session.add(user)
+        db.session.commit()
+
+        session['user_id'] = user.id
+
+        return jsonify({"message": "User created successfully", "user": user.to_dict()}), 201
+
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({"errors": str(err)}), 422
+
+# Error handling
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Not found'}), 404
 
 @app.route('/')
 def index():

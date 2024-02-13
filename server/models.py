@@ -49,6 +49,7 @@ class Favorite(db.Model, SerializerMixin):
         return f'Favorite ID: {self.id}, IGDB Game ID: {self.igdb_game_id}, User ID: {self.user_id}'
 
 class Review(db.Model):
+    __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     igdb_game_id = db.Column(db.Integer, nullable=False)
