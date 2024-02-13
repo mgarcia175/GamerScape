@@ -44,9 +44,9 @@ function handleLeaveAReview() {
                         <div className='see-more-game-info'>
                             <h1 className='see-more-game-title-details'>{game.name}</h1>
                             <div>
-                                <p className=''>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
-                                <p>Genres: {game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</p>
-                                <p>Summary: {game.summary || 'N/A'}</p>
+                                <p className='info-section'>Platforms: <span className="info-text">{game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</span></p>
+                                <p className='info-section'>Genres: <span className="info-text">{game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</span></p>
+                                <p className='info-section'>Summary: <span className="info-text">{game.summary || 'N/A'}</span></p>
                             </div>
                         </div>
                     </div>

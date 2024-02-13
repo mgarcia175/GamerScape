@@ -34,8 +34,8 @@ function AllGames() {
                         )}
                         <div className="game-info-container">
                             <h2 className="game-title">{game.name}</h2>
-                            <p className='info-section'>Platforms: {game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</p>
-                            <p className='info-section'>Genre: {game.genres ? game.genres.map(genre => genre.name).join(', '): 'N/A'}</p>
+                            <p className='info-section'>Platforms: <span className="info-text">{game.platforms ? game.platforms.map(platform => platform.name).join(', ') : 'N/A'}</span></p>
+                            <p className='info-section'>Genre: <span className="info-text">{game.genres ? game.genres.map(genre => genre.name).join(', '): 'N/A'}</span></p>
                             <button onClick={() => handleSeeMore(game.id)} className="see-more-button">See more!</button>
                         </div>
                     </div>
