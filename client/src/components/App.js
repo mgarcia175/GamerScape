@@ -5,8 +5,10 @@ import {
   Route 
 } from "react-router-dom";
 
+
 // Components
 import Login from './Login';
+import UserProfilePage from './UserProfilePage';
 import Signup from './Signup';
 import Home from './Home';
 import NavBar from './NavBar';
@@ -18,19 +20,19 @@ import ReviewForm from './ReviewForm';
 function App() {
   return (
     <Router>
-      <h1 id='app-title'>GamerScape</h1>
-      <div>
-        <NavBar />
-        <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route path='/all-games' element={<AllGames />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/games/:gameId' element={<GameDetails />} />
-          <Route path="/review/:gameId" element={<ReviewForm />} />
-          {/* Additional routes! */}
-        </Routes>
-      </div>
+        <h1 id='app-title'>GamerScape</h1>
+        <div>
+          <NavBar />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route path='/all-games' element={<AllGames />} />
+            <Route path='/login' element={<Login />} />
+            <Route path="/profile" element={<UserProfilePage />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/games/:gameId' element={<GameDetails />} />
+            <Route path="/review/:gameId" element={<ReviewForm />} />
+          </Routes>
+        </div>
     </Router>
   );
 }

@@ -14,6 +14,9 @@ function AllGames() {
             .catch(error => console.log('Oh nooo! Error fetching games. Sorry. | Details:', error));
     }, []);
 
+
+
+
     const handleSeeMore = (gameId) => {
         navigate(`/games/${gameId}`);
     };
