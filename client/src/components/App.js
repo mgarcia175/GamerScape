@@ -12,7 +12,7 @@ import UserProfilePage from './UserProfilePage';
 import Signup from './Signup';
 import Home from './Home';
 import NavBar from './NavBar';
-import AllGames from './AllGames';
+import Games from './Games';
 import GameDetails from './GameDetails';
 import ReviewForm from './ReviewForm';
 // Components
@@ -25,7 +25,7 @@ function App() {
           <NavBar />
           <Routes>
             <Route exact path='/' element={<Home />} />
-            <Route path='/all-games' element={<AllGames />} />
+            <Route path='/games' element={<Games />} />
             <Route path='/login' element={<Login />} />
             <Route path="/profile" element={<UserProfilePage />} />
             <Route path='/signup' element={<Signup />} />

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function UserProfile() {
-  const [userInfo, setUserInfo] = useState(null); // This will now include favorites and reviews
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     fetch('/user_profile', { credentials: 'include' })
       .then(response => {
-        console.log(response); // Check the response
+        console.log(response);
         return response.json();
       })
       .then(data => {
-        console.log('Data fetched:', data); // Check the data
+        // console.log('Data fetched:', data); 
         setUserInfo(data);
       })
       .catch(error => console.error('Error fetching user profile:', error));

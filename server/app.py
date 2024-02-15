@@ -2,9 +2,10 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
-from models import User, Review, Favorite
+from models import User, Review, Game
 from config import app, db, bcrypt
-from igdb_requests import fetch_games, fetch_game_details
+import requests
+from igdb_requests import fetch_games, fetch_game_details, search_igdb_games
 
 # Load environment variables
 load_dotenv()
@@ -50,6 +51,15 @@ def not_found(error):
 @app.route('/')
 def index():
     return '<h1>Welcome to the Project Server</h1>'
+
+@app.route('/search_games')
+def search_games():
+    query = request.args.get('query')
+    games_data = search_igdb_games(query)
+    if games_data:
+        return jsonify(games_data)
+    else:
+        return jsonify({'error': 'Failed to fetch games from IGDB'}), 500
 
 @app.route('/games', methods=['GET'])
 def games():
@@ -142,8 +152,10 @@ def get_user_profile():
         return jsonify(user_data), 200
     else:
         return jsonify({'message': 'User not found'}), 404
-
 #User info for profile page !!!!!Not working...!!!
+
+
+
 
 
 if __name__ == '__main__':

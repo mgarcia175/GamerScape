@@ -17,6 +17,7 @@ def handle_api_response(response):
     except Exception as e:
         print(f"An error occurred while handling the API response: {str(e)}")
 
+#Scrapped this logic for specific game search. May use this in the future
 def fetch_games():
     url = "https://api.igdb.com/v4/games"
     headers = {
@@ -42,6 +43,33 @@ def fetch_games():
     except Exception as e:
         print(f"An error occurred: {str(e)}")
         return None
+#Scrapped this logic for specific game search. May use this in the future
+
+def search_igdb_games(query):
+    url = "https://api.igdb.com/v4/games"
+    headers = {
+        "Client-ID": os.getenv('IGDB_CLIENT_ID'),
+        "Authorization": f"Bearer {os.getenv('IGDB_ACCESS_TOKEN')}",
+    }
+    body = f'fields name, cover.image_id, platforms.name, genres.name; search "{query}"; limit 10;'
+
+    try:
+        response = requests.post(url, headers=headers, data=body)
+        if response.status_code == 200:
+            games_data = response.json()
+
+            for game in games_data:
+                cover_id = game.get('cover', {}).get('image_id')
+                game['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
+
+            return games_data
+        else:
+            print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return None
+
 
 def fetch_game_details(game_id):
     url = f"https://api.igdb.com/v4/games/{game_id}"

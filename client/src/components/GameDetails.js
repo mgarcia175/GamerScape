@@ -23,9 +23,6 @@ function GameDetails() {
             .catch(error => console.error('Error fetching game details:', error));
     }, [gameId]);
 
-function handleAddToFavorites() {
-
-}
 
 function handleLeaveAReview() {
     navigate(`/review/${gameId}`);
@@ -34,8 +31,7 @@ function handleLeaveAReview() {
 return (
     <div id='see-more-game-container'>
         <div className='see-more-game-details-container'>
-            <div id='review-and-favorites-button'>
-                <button onClick={handleAddToFavorites}>Add to Favorites</button>
+            <div id='review-button'>
                 <button onClick={handleLeaveAReview}>Leave a Review</button>
             </div>
             {game ? (
