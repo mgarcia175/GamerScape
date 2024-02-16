@@ -8,23 +8,26 @@ function Games() {
     const [searched, setSearched] = useState(false);
     const navigate = useNavigate();
 
-    const handleSearch = async (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch(`/search_games?query=${encodeURIComponent(query)}`, {
-                credentials: 'include'
-            });
+        fetch(`/search_games?query=${encodeURIComponent(query)}`, {
+            credentials: 'include'
+        })
+        .then(response => {
             if (!response.ok) {
                 throw new Error('Search failed');
             }
-            const data = await response.json();
+            return response.json();
+        })
+        .then(data => {
             setGames(data);
             setError('');
             setSearched(true);
-        } catch (error) {
+        })
+        .catch(error => {
             console.error('Error searching games:', error);
             setError('Failed to search for games. Please try again later.');
-        }
+        });
     };
 
     return (
@@ -43,6 +46,10 @@ function Games() {
             {error && <p>{error}</p>}
             {searched && (
                 <div className="game-container">
+                    <div>
+                        <p>Don't see your game?</p>
+                        <button onClick={() => navigate('/create-game')} className="create-game-button">Create Game</button>
+                    </div>
                     {games.length > 0 ? (
                         games.map((game, index) => (
                             <div key={index} className="game-card">

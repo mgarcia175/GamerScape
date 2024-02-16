@@ -66,6 +66,14 @@ def games():
     games_data = fetch_games()
     return jsonify(games_data)
 
+@app.route('/api/games', methods=['POST'])
+def create_game():
+    data = request.get_json()
+    new_game = Game(title=data['title'], genre=data['genre'], summary=data['summary'])
+    db.session.add(new_game)
+    db.session.commit()
+    return jsonify({'message': 'Game created successfully', 'game_id': new_game.id}), 201
+
 @app.route('/api/games/<int:game_id>', methods=['GET'])
 def game_details(game_id):
     game_detail = fetch_game_details(game_id)
