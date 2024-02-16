@@ -102,13 +102,18 @@ def submit_review():
     if 'user_id' not in session:
         return jsonify({'message': 'Authentication required'}), 401
 
-    try:
-        data = request.get_json()
-        user_id = session.get('user_id')
+    data = request.get_json()
+    user_id = session.get('user_id')
+    
+    # Determine if the review is for an IGDB game or a user-created game
+    igdb_game_id = data.get('igdb_game_id')
+    game_id = data.get('game_id')
 
+    try:
         new_review = Review(
             user_id=user_id,
-            igdb_game_id=data.get('igdb_game_id'),
+            igdb_game_id=igdb_game_id if igdb_game_id else None,
+            game_id=game_id if game_id else None,
             difficulty=data.get('difficulty'),
             graphics=data.get('graphics'),
             gameplay=data.get('gameplay'),
@@ -120,7 +125,6 @@ def submit_review():
         return jsonify({'message': 'Review submitted successfully'}), 201
     except Exception as e:
         db.session.rollback()
-        app.logger.error(f'Error submitting review: {str(e)}')  # Log the error for debugging
         return jsonify({'message': 'Error submitting review', 'error': str(e)}), 500
 
 

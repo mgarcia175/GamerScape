@@ -48,10 +48,11 @@ class Game(db.Model, SerializerMixin):
 # Review Model
 class Review(db.Model):
     __tablename__ = 'reviews'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=True)
+    igdb_game_id = db.Column(db.String, nullable=True)
     difficulty = db.Column(db.Integer)
     graphics = db.Column(db.Integer)
     gameplay = db.Column(db.Integer)
