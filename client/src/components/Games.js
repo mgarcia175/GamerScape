@@ -43,20 +43,22 @@ function Games() {
                 />
                 <button type="submit" className="search-button">Search</button>
             </form>
+            <div className='create-game-container'>
+                <p>Don't see your game?</p>
+                <button onClick={() => navigate('/create-game')} className="create-game-button">Create Game</button>
+            </div>
             {error && <p>{error}</p>}
             {searched && (
                 <div className="game-container">
-                    <div>
-                        <p>Don't see your game?</p>
-                        <button onClick={() => navigate('/create-game')} className="create-game-button">Create Game</button>
-                    </div>
                     {games.length > 0 ? (
                         games.map((game, index) => (
                             <div key={index} className="game-card">
-                                {game.cover_url && (
+                                {game.cover_url ? (
                                     <div className="game-image-container">
                                         <img src={game.cover_url} alt={`Cover of ${game.name}`} className="game-image" />
                                     </div>
+                                ) : (
+                                    <div className="game-placeholder">Image not available</div>
                                 )}
                                 <div className="game-info-container">
                                     <h2 className="game-title">{game.name}</h2>
@@ -72,7 +74,8 @@ function Games() {
                 </div>
             )}
         </div>
-    );
-}
+    )
+};
+
 
 export default Games;

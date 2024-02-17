@@ -41,20 +41,21 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.6em;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 }
 
 #app-title {
   font-size: 70px;
   font-family: 'Montserrat', sans-serif;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
   padding-top: 50px;
-  color: transparent; 
+  color: transparent;
   -webkit-text-stroke: 2px rgba(199, 65, 7, 0.484);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
+  margin-bottom: 0;
 }
 
 nav {
@@ -92,6 +93,27 @@ nav a:hover {
 
 #games-list-title{
   margin-bottom: 60px;
+}
+
+.create-game-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.create-game-button {
+  margin-left: 10px;
+  padding: 5px 5px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.694); 
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-game-button:hover {
+  background-color: rgba(43, 41, 41, 0.7);
 }
 
 .game-container {
@@ -255,7 +277,7 @@ nav a:hover {
   align-items: center;
   height: 60vh;
   backdrop-filter: blur(5px);
-  max-width: 600px;
+  max-width: 640px;
   margin: auto;
   border-radius: 15px;
   font-size: 23px;
@@ -268,6 +290,7 @@ nav a:hover {
   background-color: rgba(7, 7, 7, 0.8);
   margin: 5px 0;
   padding: 5px;
+  border-radius: 15px;
 }
 
 #login-title{
@@ -509,7 +532,7 @@ nav a:hover {
 .search-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .search-field {
@@ -533,7 +556,6 @@ nav a:hover {
 
 .search-button {
   padding: 10px 20px;
-  border: none;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.694); 
   color: white;
@@ -542,9 +564,108 @@ nav a:hover {
 }
 
 .search-button:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(43, 41, 41, 0.7);
 }
 
 .search-button:active {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.create-game-form {
+  border: 4px solid silver;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  backdrop-filter: blur(5px);
+  max-width: 640px;
+  margin: auto;
+  border-radius: 15px;
+  font-size: 23px;
+  text-align: center;
+  color: rgb(68, 209, 13);
+  margin-bottom: 70px;
+}
+
+.form-input {
+  font-size: 20px;
+  opacity: 0.8; 
+  background-color: rgba(7, 7, 7, 0.8);
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.form-label {
+  font-size: 23px;
+
+}
+
+.create-text-input {
+  opacity: 0.8; 
+  background-color: rgba(7, 7, 7, 0.8);
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 15px;
+  font-size: 23px;
+  width: 400px;
+  height: 100px;
+  margin-top: 20px;
+}
+
+.form-input[type="text"],
+.form-textarea {
+  padding: 5px;
+  width: 350px;
+  height: 40px;
+}
+
+.form-button {
+  font-size: 23px;
+  background-color: rgb(81, 218, 27);
+  margin-top: 15px;
+  border-radius: 15px;
+  font-size: 1em;
+  padding: 10px 10px;
+  border: none;
+  color: rgb(7, 7, 7);
+}
+
+.form-button:hover {
+  background-color: rgb(3, 74, 6);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.leave-review-button {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -20px;
+}
+
+.leave-review-button button {
+  margin-left: 15px;
+  font-size: 1.2em;
+  background-color: #2c3e50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.leave-review-button button:hover {
+  background-color: #34495e;
 }

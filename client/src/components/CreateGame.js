@@ -34,17 +34,23 @@ function CreateGame({ onGameCreated }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Create your Game</h1>
-            <label>Title:</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-            <label>Genre:</label>
-            <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} required />
-            <label>Summary:</label>
-            <textarea value={summary} onChange={(e) => setSummary(e.target.value)} required />
-            <button type="submit">Submit</button>
+        <form onSubmit={handleSubmit} className="create-game-form">
+          <h1>Create your Game</h1>
+          <div className="form-group">
+            <label className="form-label">Title: </label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-input" required />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Genre: </label>
+            <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-input" required />
+          </div>
+          <div className="form-group">
+            <label className="summary-form-label">Summary: </label>
+            <textarea value={summary} onChange={(e) => setSummary(e.target.value)} className="create-text-input" required />
+          </div>
+          <button type="submit" className="form-button">Submit</button>
         </form>
-    );
+      );
 }
 
 export default CreateGame;
