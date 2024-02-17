@@ -250,7 +250,8 @@ nav a:hover {
 }
 
 .review-submit-button {
-  padding: 10px 20px;
+  font-size: 20px;
+  padding: 13px 25px;
   border: none;
   border-radius: 8px;
   background-color: rgba(64, 63, 63, 0.5);
@@ -637,17 +638,6 @@ nav a:hover {
   transform: scale(1.05);
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .leave-review-button {
   display: flex;
