@@ -23,19 +23,29 @@ const ReviewForm = () => {
             review: Yup.string().required('Required'),
         }),
         onSubmit: (values, { setSubmitting }) => {
+            const isUserCreatedGame = gameId.startsWith('user-');
+
+            const reviewPayload = {
+                difficulty: values.difficulty,
+                graphics: values.graphics,
+                gameplay: values.gameplay,
+                storyline: values.storyline,
+                review: values.review,
+            };
+
+            // Adjusting payload based on the game type
+            if (isUserCreatedGame) {
+                reviewPayload.game_id = gameId.replace('user-', '');
+            } else {
+                reviewPayload.igdb_game_id = gameId;
+            }
+        
             fetch('/api/reviews', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    igdb_game_id: gameId,
-                    difficulty: values.difficulty,
-                    graphics: values.graphics,
-                    gameplay: values.gameplay,
-                    storyline: values.storyline,
-                    review: values.review,
-                }),
+                body: JSON.stringify(reviewPayload),
                 credentials: 'include',
             })
             .then(response => {
@@ -46,7 +56,7 @@ const ReviewForm = () => {
             })
             .then(data => {
                 console.log('Review successfully submitted:', data);
-                navigate(`/games/${gameId}`);
+                navigate(`/`);
             })
             .catch(error => {
                 console.error('Error submitting review:', error);

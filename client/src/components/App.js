@@ -16,6 +16,7 @@ import Games from './Games';
 import GameDetails from './GameDetails';
 import ReviewForm from './ReviewForm';
 import CreateGame from "./CreateGame";
+import CreatedGameCard from "./CreatedGameCard";
 // Components
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
             <Route path='/games/:gameId' element={<GameDetails />} />
             <Route path="/review/:gameId" element={<ReviewForm />} />
             <Route path="/create-game" element={<CreateGame />} />
+            <Route path='/created-game' element={<CreatedGameCard />} />
+
           </Routes>
         </div>
     </Router>

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CreateGame({ onGameCreated }) {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [summary, setSummary] = useState('');
@@ -23,8 +26,7 @@ function CreateGame({ onGameCreated }) {
         })
         .then(data => {
             console.log('Game created successfully:', data);
-            // Optionally, invoke a callback to update the parent component or navigate
-            if (onGameCreated) onGameCreated();
+            navigate('/created-game', {state: {game: data} })
         })
         .catch(error => {
             console.error('Error creating game:', error);

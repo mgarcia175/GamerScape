@@ -72,7 +72,14 @@ def create_game():
     new_game = Game(title=data['title'], genre=data['genre'], summary=data['summary'])
     db.session.add(new_game)
     db.session.commit()
-    return jsonify({'message': 'Game created successfully', 'game_id': new_game.id}), 201
+    return jsonify({
+        'game_id': new_game.id,
+        'title': new_game.title,
+        'genre': new_game.genre,
+        'summary': new_game.summary,
+        'message': 'Game created successfully'
+    }), 201
+
 
 @app.route('/api/games/<int:game_id>', methods=['GET'])
 def game_details(game_id):
@@ -113,15 +120,23 @@ def submit_review():
     data = request.get_json()
     user_id = session.get('user_id')
     
-    # Determine if the review is for an IGDB game or a user-created game
+    game_id = None
+
+    # Check if it's an IGDB game or a user-created game
     igdb_game_id = data.get('igdb_game_id')
-    game_id = data.get('game_id')
+    if igdb_game_id:
+        pass
+    else:
+        # If it's not an IGDB game, it must be a user-created game
+        game_id = data.get('game_id')
+        if not game_id:
+            # If neither return error
+            return jsonify({'message': 'Game identifier missing'}), 400
 
     try:
         new_review = Review(
             user_id=user_id,
-            igdb_game_id=igdb_game_id if igdb_game_id else None,
-            game_id=game_id if game_id else None,
+            game_id=game_id,
             difficulty=data.get('difficulty'),
             graphics=data.get('graphics'),
             gameplay=data.get('gameplay'),

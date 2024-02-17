@@ -48,7 +48,7 @@ return (
                             <p className='info-section'>Summary: <span className="info-text">{game.summary || 'N/A'}</span></p>
                         </div>
                         {game.screenshot_urls && (
-                            <ScreenshotGallery screenshotUrls={game.screenshot_urls} /> // Use the ScreenshotGallery component
+                            <ScreenshotGallery screenshotUrls={game.screenshot_urls} />
                         )}
                     </div>
                 </div>

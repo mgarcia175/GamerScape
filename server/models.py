@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-from config import db, bcrypt  # Make sure db and bcrypt are correctly initialized in config.py
+from config import db, bcrypt
 from sqlalchemy.orm import validates
 from datetime import datetime
 

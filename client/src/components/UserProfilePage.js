@@ -10,7 +10,6 @@ function UserProfile() {
         return response.json();
       })
       .then(data => {
-        // console.log('Data fetched:', data); 
         setUserInfo(data);
       })
       .catch(error => console.error('Error fetching user profile:', error));
