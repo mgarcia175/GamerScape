@@ -106,3 +106,31 @@ def fetch_game_details(game_id):
         print(f"An error occurred: {str(e)}")
         return None
 
+def fetch_igdb_game_title(igdb_game_id):
+    igdb_client_id = os.getenv('IGDB_CLIENT_ID')
+    igdb_access_token = os.getenv('IGDB_ACCESS_TOKEN')
+
+    url = f"https://api.igdb.com/v4/games"
+
+    headers = {
+        'Client-ID': igdb_client_id,
+        'Authorization': f'Bearer {igdb_access_token}',
+    }
+
+    body = f'fields name; where id = {igdb_game_id};'
+
+    try:
+        response = requests.post(url, headers=headers, data=body)
+        response.raise_for_status()
+
+        #Parse
+        game_data = response.json()
+
+        if game_data:
+            game_title = game_data[0]['name']
+            return game_title
+        else:
+            return "Game title not found"
+    except Exception as e:
+        print(f"An error occurred while fetching the game title from IGDB: {e}")
+        return "Error fetching game title"

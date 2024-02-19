@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from models import User, Review, Game
 from config import app, db, bcrypt
 import requests
-from igdb_requests import fetch_games, fetch_game_details, search_igdb_games
+from igdb_requests import fetch_games, fetch_game_details, search_igdb_games, fetch_igdb_game_title
 
 # Load environment variables
 load_dotenv()
@@ -16,7 +16,9 @@ bcrypt = Bcrypt(app)
 # Secret key for session management
 app.secret_key = os.getenv('SECRET_KEY')
 
-# API Resource Routes
+
+
+
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -80,7 +82,6 @@ def create_game():
         'message': 'Game created successfully'
     }), 201
 
-
 @app.route('/api/games/<int:game_id>', methods=['GET'])
 def game_details(game_id):
     game_detail = fetch_game_details(game_id)
@@ -119,24 +120,28 @@ def submit_review():
 
     data = request.get_json()
     user_id = session.get('user_id')
-    
-    game_id = None
 
-    # Check if it's an IGDB game or a user-created game
-    igdb_game_id = data.get('igdb_game_id')
-    if igdb_game_id:
-        pass
-    else:
-        # If it's not an IGDB game, it must be a user-created game
-        game_id = data.get('game_id')
-        if not game_id:
-            # If neither return error
-            return jsonify({'message': 'Game identifier missing'}), 400
+    game_id = None
+    igdb_game_id = None
+
+    print(data)
+
+    if 'game_id' in data and data['game_id']:
+        try:
+            game_id = data['game_id']
+        except ValueError:
+            return jsonify({'message': 'Invalid game identifier'}), 400
+    elif 'igdb_game_id' in data:
+        igdb_game_id = data['igdb_game_id']
+
+    if not game_id and not igdb_game_id:
+        return jsonify({'message': 'Game identifier missing'}), 400
 
     try:
         new_review = Review(
             user_id=user_id,
             game_id=game_id,
+            igdb_game_id=igdb_game_id,
             difficulty=data.get('difficulty'),
             graphics=data.get('graphics'),
             gameplay=data.get('gameplay'),
@@ -150,37 +155,50 @@ def submit_review():
         db.session.rollback()
         return jsonify({'message': 'Error submitting review', 'error': str(e)}), 500
 
-
-#User info for profile page !!!!!Not working...!!!
 @app.route('/user_profile', methods=['GET'])
 def get_user_profile():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'message': 'User not logged in'}), 401
-    
-    user = User.query.filter_by(id=user_id).first()
-    if user:
-        # favorites
-        favorites = Favorite.query.filter_by(user_id=user_id).all()
-        favorites_data = [{'id': fav.id, 'igdb_game_id': fav.igdb_game_id, 'date_added': fav.date_added} for fav in favorites]
-        
-        # reviews
-        reviews = Review.query.filter_by(user_id=user_id).all()
-        reviews_data = [{'id': rev.id, 'comment': rev.comment, 'rating': rev.rating, 'igdb_game_id': rev.igdb_game_id, 'created_at': rev.created_at} for rev in reviews]
-        
-        # user info
-        user_data = {
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "favorites": favorites_data,
-            "reviews": reviews_data,
-        }
-        return jsonify(user_data), 200
-    else:
-        return jsonify({'message': 'User not found'}), 404
-#User info for profile page !!!!!Not working...!!!
 
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    user_data = {
+        "id": user.id,
+        "email": user.email,
+        "username": user.username,
+        "reviews": []
+    }
+
+    reviews = Review.query.filter_by(user_id=user_id).all()
+    for review in reviews:
+        review_data = {
+            'id': review.id,
+            'difficulty': review.difficulty,
+            'graphics': review.graphics,
+            'gameplay': review.gameplay,
+            'storyline': review.storyline,
+            'review': review.review,
+            'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        }
+
+        if review.game_id:
+            game = Game.query.get(review.game_id)
+            review_data['game_title'] = game.title if game else 'Game not found'
+            review_data['genre'] = game.genre if game else 'N/A'
+        elif review.igdb_game_id:
+            # This is a placeholder for the actual IGDB API call, which would set the game title
+            # You'll need to implement fetch_igdb_game_title to make an API request to IGDB
+            review_data['game_title'] = fetch_igdb_game_title(review.igdb_game_id)
+            # IGDB genre and other details would be similarly fetched and set here
+        else:
+            review_data['game_title'] = 'N/A'
+
+        user_data['reviews'].append(review_data)
+
+    return jsonify(user_data)
 
 
 

@@ -23,8 +23,6 @@ const ReviewForm = () => {
             review: Yup.string().required('Required'),
         }),
         onSubmit: (values, { setSubmitting }) => {
-            const isUserCreatedGame = gameId.startsWith('user-');
-
             const reviewPayload = {
                 difficulty: values.difficulty,
                 graphics: values.graphics,
@@ -33,13 +31,14 @@ const ReviewForm = () => {
                 review: values.review,
             };
 
-            // Adjusting payload based on the game type
-            if (isUserCreatedGame) {
-                reviewPayload.game_id = gameId.replace('user-', '');
+            if (gameId) {
+                console.log(gameId)
+                console.log(reviewPayload)
+                reviewPayload.game_id = gameId
             } else {
                 reviewPayload.igdb_game_id = gameId;
             }
-        
+
             fetch('/api/reviews', {
                 method: 'POST',
                 headers: {
