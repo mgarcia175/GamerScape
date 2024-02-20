@@ -197,6 +197,17 @@ def get_user_profile():
 
     return jsonify(user_data)
 
+@app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'message': 'Authentication required'}), 401
+
+    review = Review.query.filter_by(id=review_id, user_id=user_id).first()
+    if review:
+        db.session.delete(review)
+        db.session.commit()
+        return jsonify({'message': 'Review deleted successfully'}), 200
 
 
 

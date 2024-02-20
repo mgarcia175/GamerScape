@@ -35,9 +35,27 @@ function Home() {
         return <div>Error: {error}</div>;
     }
 
-    const handleDeleteReview = () => {
-
-    }
+    const handleDeleteReview = (reviewId) => {
+        fetch(`/api/reviews/${reviewId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete review');
+            }
+            return response.json();
+        })
+        .then(() => {
+            setUserData(prevUserData => ({
+                ...prevUserData,
+                reviews: prevUserData.reviews.filter(review => review.id !== reviewId),
+            }));
+        })
+        .catch(error => {
+            console.error('Error deleting review:', error);
+        });
+    };
 
     const handleEditReview = () => {
 
