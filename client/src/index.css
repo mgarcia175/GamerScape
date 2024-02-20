@@ -685,9 +685,21 @@ nav a:hover {
 
 
 
+.user-info-title {
+  font-size: 35px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
-
-
+.reviews-title {
+  font-size: 35px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
 .home-container {
   display: flex;
@@ -719,8 +731,17 @@ nav a:hover {
   overflow-y: auto;
 }
 
-.review-item + .review-item {
-  margin-top: 20px;
+.review-item {
+  border: 1px solid #867272; /* Adds a light gray border around each review */
+  padding: 15px; /* Adds padding inside the border for some spacing around the review content */
+  margin-bottom: 20px; /* Ensures there's space between successive review items */
+  background-color: #262424; /* Optional: adds a background color to each review item */
+  border-radius: 5px; /* Optional: adds rounded corners to the border */
+}
+
+.review-item:hover {
+  transition: background-color 0.5s ease;
+  background-color: #111111;
 }
 
 .delete-review-button {
@@ -734,6 +755,7 @@ nav a:hover {
 }
 
 .delete-review-button:hover {
+  transition: background-color 0.2s ease;
   background-color: rgb(88, 4, 4);
 }
 
@@ -748,5 +770,6 @@ nav a:hover {
 }
 
 .edit-review-button:hover {
+  transition: background-color 0.2s ease;
   background-color: rgb(2, 0, 139);
 }

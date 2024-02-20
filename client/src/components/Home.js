@@ -49,12 +49,12 @@ function Home() {
             {userData ? (
                 <div className="user-profile-container">
                     <div className="user-info">
-                        <h2>User Information</h2>
+                        <h2 className='user-info-title'>User Information</h2>
                         <p>Username: {userData.username}</p>
                         <p>Email: {userData.email}</p>
                     </div>
                     <div className="user-reviews">
-                        <h3>Reviews</h3>
+                        <h3 className='reviews-title'>Reviews</h3>
                         {userData.reviews.length > 0 ? (
                         <ul className="reviews-list">
                             {userData.reviews.map((review) => (
@@ -66,8 +66,8 @@ function Home() {
                                     <p>Storyline: {review.storyline || 'N/A'}</p>
                                     <p>Review: {review.review || 'No review text'}</p>
                                     <p>Date: {review.created_at || 'Date not available'}</p>
-                                    <button onClick={() => handleDeleteReview(review.id)} className="delete-review-button">Delete</button>
                                     <button onClick={() => handleEditReview(review.id)} className="edit-review-button">Edit</button>
+                                    <button onClick={() => handleDeleteReview(review.id)} className="delete-review-button">Delete</button>
                                 </li>
                             ))}
                         </ul>
