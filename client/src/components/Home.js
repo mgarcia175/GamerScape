@@ -35,6 +35,14 @@ function Home() {
         return <div>Error: {error}</div>;
     }
 
+    const handleDeleteReview = () => {
+
+    }
+
+    const handleEditReview = () => {
+
+    }
+
     return (
         <div className="home-container">
             <h1>Home</h1>
@@ -58,6 +66,8 @@ function Home() {
                                     <p>Storyline: {review.storyline || 'N/A'}</p>
                                     <p>Review: {review.review || 'No review text'}</p>
                                     <p>Date: {review.created_at || 'Date not available'}</p>
+                                    <button onClick={() => handleDeleteReview(review.id)} className="delete-review-button">Delete</button>
+                                    <button onClick={() => handleEditReview(review.id)} className="edit-review-button">Edit</button>
                                 </li>
                             ))}
                         </ul>

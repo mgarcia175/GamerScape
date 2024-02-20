@@ -700,7 +700,7 @@ nav a:hover {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1200px; /* Adjust based on your layout preference */
 }
 
 .user-info {
@@ -721,4 +721,32 @@ nav a:hover {
 
 .review-item + .review-item {
   margin-top: 20px;
+}
+
+.delete-review-button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-review-button:hover {
+  background-color: rgb(88, 4, 4);
+}
+
+.edit-review-button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: rgb(21, 95, 244);
+  color: white;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-review-button:hover {
+  background-color: rgb(2, 0, 139);
 }
