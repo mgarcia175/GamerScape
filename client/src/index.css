@@ -659,3 +659,66 @@ nav a:hover {
 .leave-review-button button:hover {
   background-color: #34495e;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.user-profile-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.user-info {
+  flex-basis: 40%;
+}
+
+.user-reviews {
+  flex-basis: 40%;
+  overflow: auto;
+}
+
+.reviews-list {
+  list-style-type: none;
+  padding: 0;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.review-item + .review-item {
+  margin-top: 20px;
+}

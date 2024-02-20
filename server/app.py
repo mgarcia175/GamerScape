@@ -120,17 +120,16 @@ def submit_review():
         return jsonify({'message': 'Authentication required'}), 401
 
     data = request.get_json()
-    print("Received review data:", data)  # Debug print to check received data
+    print("Received review data:", data)
 
     user_id = session.get('user_id')
     game_id = data.get('game_id')
     igdb_game_id = data.get('igdb_game_id')
 
-    # Improved logging to clarify which ID is present
     print(f"game_id received: {game_id if game_id else 'None'}")
     print(f"igdb_game_id received: {igdb_game_id if igdb_game_id else 'None'}")
 
-    # Check for the presence of either game_id or igdb_game_id to handle potential issues
+
     if not game_id and not igdb_game_id:
         print("Error: Both game_id and igdb_game_id are missing.")
         return jsonify({'error': 'Missing game identifier'}), 400
@@ -138,8 +137,8 @@ def submit_review():
     try:
         new_review = Review(
             user_id=user_id,
-            game_id=game_id if game_id else None,  # Ensure None is explicitly set if game_id is not provided
-            igdb_game_id=igdb_game_id if igdb_game_id else None,  # Ensure None is explicitly set if igdb_game_id is not provided
+            game_id=game_id if game_id else None,
+            igdb_game_id=igdb_game_id if igdb_game_id else None,
             difficulty=data['difficulty'],
             graphics=data['graphics'],
             gameplay=data['gameplay'],
@@ -151,7 +150,7 @@ def submit_review():
 
         return jsonify({'message': 'Review submitted successfully', 'review_id': new_review.id}), 201
     except Exception as e:
-        print(f"Error submitting review: {e}")  # Log the error before rolling back
+        print(f"Error submitting review: {e}")
         db.session.rollback()
         return jsonify({'error': 'Review submission failed', 'details': str(e)}), 500
 
@@ -190,10 +189,7 @@ def get_user_profile():
             review_data['game_title'] = game.title if game else 'Game not found'
             review_data['genre'] = game.genre if game else 'N/A'
         elif review.igdb_game_id:
-            # This is a placeholder for the actual IGDB API call, which would set the game title
-            # You'll need to implement fetch_igdb_game_title to make an API request to IGDB
             review_data['game_title'] = fetch_igdb_game_title(review.igdb_game_id)
-            # IGDB genre and other details would be similarly fetched and set here
         else:
             review_data['game_title'] = 'N/A'
 

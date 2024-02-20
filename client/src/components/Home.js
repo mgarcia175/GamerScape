@@ -36,31 +36,35 @@ function Home() {
     }
 
     return (
-        <div>
+        <div className="home-container">
             <h1>Home</h1>
             {userData ? (
-                <div>
-                    <h2>User Information</h2>
-                    <p>Username: {userData.username}</p>
-                    <p>Email: {userData.email}</p>
-                    <h3>Reviews</h3>
-                    {userData.reviews.length > 0 ? (
-                    <ul>
-                        {userData.reviews.map((review) => (
-                            <li key={review.id}>
-                                <p>Game Title: {review.game_title}</p>
-                                <p>Difficulty: {review.difficulty}</p>
-                                <p>Graphics: {review.graphics}</p>
-                                <p>Gameplay: {review.gameplay}</p>
-                                <p>Storyline: {review.storyline}</p>
-                                <p>Review: {review.review}</p>
-                                <p>Date: {review.created_at}</p>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No reviews found.</p>
-                )}
+                <div className="user-profile-container">
+                    <div className="user-info">
+                        <h2>User Information</h2>
+                        <p>Username: {userData.username}</p>
+                        <p>Email: {userData.email}</p>
+                    </div>
+                    <div className="user-reviews">
+                        <h3>Reviews</h3>
+                        {userData.reviews.length > 0 ? (
+                        <ul className="reviews-list">
+                            {userData.reviews.map((review) => (
+                                <li key={review.id} className="review-item">
+                                    <p>Game Title: {review.game_title || 'Title not available'}</p>
+                                    <p>Difficulty: {review.difficulty || 'N/A'}</p>
+                                    <p>Graphics: {review.graphics || 'N/A'}</p>
+                                    <p>Gameplay: {review.gameplay || 'N/A'}</p>
+                                    <p>Storyline: {review.storyline || 'N/A'}</p>
+                                    <p>Review: {review.review || 'No review text'}</p>
+                                    <p>Date: {review.created_at || 'Date not available'}</p>
+                                </li>
+                            ))}
+                        </ul>
+                        ) : (
+                        <p>No reviews found.</p>
+                        )}
+                    </div>
                 </div>
             ) : (
                 <p>User information is not available.</p>

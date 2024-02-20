@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const ReviewForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { gameId, userCreated } = location.state || {}; // Ensure we get these values from the state
+    const { gameId, userCreated } = location.state || {};
     console.log(gameId)
     console.log(userCreated)
 
@@ -37,8 +37,8 @@ const ReviewForm = () => {
                 review: values.review,
             };
 
-            console.log("gameId:", gameId); // Log the gameId
-            console.log("userCreated:", userCreated); // Log the userCreated flag
+            console.log("gameId:", gameId);
+            console.log("userCreated:", userCreated);
 
             if (userCreated) {
                 reviewPayload.game_id = gameId; // For user-created games
