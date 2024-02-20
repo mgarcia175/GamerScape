@@ -1,11 +1,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ReviewForm = () => {
-    const { gameId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    const { gameId, userCreated } = location.state || {}; // Ensure we get these values from the state
+    console.log(gameId)
+    console.log(userCreated)
+
+    console.log(location.state);
 
     const formik = useFormik({
         initialValues: {
@@ -23,6 +28,7 @@ const ReviewForm = () => {
             review: Yup.string().required('Required'),
         }),
         onSubmit: (values, { setSubmitting }) => {
+            
             const reviewPayload = {
                 difficulty: values.difficulty,
                 graphics: values.graphics,
@@ -31,13 +37,17 @@ const ReviewForm = () => {
                 review: values.review,
             };
 
-            if (gameId) {
-                console.log(gameId)
-                console.log(reviewPayload)
-                reviewPayload.game_id = gameId
+            console.log("gameId:", gameId); // Log the gameId
+            console.log("userCreated:", userCreated); // Log the userCreated flag
+
+            if (userCreated) {
+                reviewPayload.game_id = gameId; // For user-created games
             } else {
-                reviewPayload.igdb_game_id = gameId;
+                reviewPayload.igdb_game_id = gameId; // For IGDB games
             }
+
+            console.log("Submitting review with payload:", reviewPayload);
+
 
             fetch('/api/reviews', {
                 method: 'POST',

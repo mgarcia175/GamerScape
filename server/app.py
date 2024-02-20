@@ -79,6 +79,7 @@ def create_game():
         'title': new_game.title,
         'genre': new_game.genre,
         'summary': new_game.summary,
+        'userCreated': True,  # Mark game as user-created
         'message': 'Game created successfully'
     }), 201
 
@@ -119,41 +120,41 @@ def submit_review():
         return jsonify({'message': 'Authentication required'}), 401
 
     data = request.get_json()
+    print("Received review data:", data)  # Debug print to check received data
+
     user_id = session.get('user_id')
+    game_id = data.get('game_id')
+    igdb_game_id = data.get('igdb_game_id')
 
-    game_id = None
-    igdb_game_id = None
+    # Improved logging to clarify which ID is present
+    print(f"game_id received: {game_id if game_id else 'None'}")
+    print(f"igdb_game_id received: {igdb_game_id if igdb_game_id else 'None'}")
 
-    print(data)
-
-    if 'game_id' in data and data['game_id']:
-        try:
-            game_id = data['game_id']
-        except ValueError:
-            return jsonify({'message': 'Invalid game identifier'}), 400
-    elif 'igdb_game_id' in data:
-        igdb_game_id = data['igdb_game_id']
-
+    # Check for the presence of either game_id or igdb_game_id to handle potential issues
     if not game_id and not igdb_game_id:
-        return jsonify({'message': 'Game identifier missing'}), 400
+        print("Error: Both game_id and igdb_game_id are missing.")
+        return jsonify({'error': 'Missing game identifier'}), 400
 
     try:
         new_review = Review(
             user_id=user_id,
-            game_id=game_id,
-            igdb_game_id=igdb_game_id,
-            difficulty=data.get('difficulty'),
-            graphics=data.get('graphics'),
-            gameplay=data.get('gameplay'),
-            storyline=data.get('storyline'),
-            review=data.get('review')
+            game_id=game_id if game_id else None,  # Ensure None is explicitly set if game_id is not provided
+            igdb_game_id=igdb_game_id if igdb_game_id else None,  # Ensure None is explicitly set if igdb_game_id is not provided
+            difficulty=data['difficulty'],
+            graphics=data['graphics'],
+            gameplay=data['gameplay'],
+            storyline=data['storyline'],
+            review=data['review']
         )
         db.session.add(new_review)
         db.session.commit()
-        return jsonify({'message': 'Review submitted successfully'}), 201
+
+        return jsonify({'message': 'Review submitted successfully', 'review_id': new_review.id}), 201
     except Exception as e:
+        print(f"Error submitting review: {e}")  # Log the error before rolling back
         db.session.rollback()
-        return jsonify({'message': 'Error submitting review', 'error': str(e)}), 500
+        return jsonify({'error': 'Review submission failed', 'details': str(e)}), 500
+
 
 @app.route('/user_profile', methods=['GET'])
 def get_user_profile():

@@ -25,7 +25,8 @@ function GameDetails() {
 
 
 function handleLeaveAReview() {
-    navigate(`/review/${gameId}`);
+    console.log(game)
+    navigate(`/review/${game.id}`, { state: { gameId: game.id, userCreated: false } })
 }
 
 return (

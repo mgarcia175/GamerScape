@@ -7,10 +7,15 @@ const CreatedGameCard = () => {
   const navigate = useNavigate();
   const { game } = location.state || {};
 
+const handleLeaveReview = () => {
+  console.log(game)
+  navigate(`/review/${game.game_id}`, { state: { gameId: game.game_id, userCreated: true } } );
+}
+
   return (
     <div>
       <div className='leave-review-button'>
-      <button onClick={() => navigate(`/review/${game.game_id}`)}>Leave a Review</button>
+      <button onClick={handleLeaveReview}>Leave a Review</button>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh'}}>
