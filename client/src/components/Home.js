@@ -1,3 +1,5 @@
+import GamerProfilePlaceholder from '../images/GamerScape Profile Placeholder.webp';
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +23,7 @@ function Home() {
             return response.json();
         })
         .then(data => {
+            data.reviews.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             setUserData(data);
             setLoading(false);
         })
@@ -69,12 +72,15 @@ function Home() {
         <div className="home-container">
             <h1>Home</h1>
             {userData ? (
-                <div className="user-profile-container">
+            <div className="user-profile-container">
+                <div className="user-info-container">
+                    <h2 className='user-info-title'>User Information</h2>
+                    <img src={GamerProfilePlaceholder} alt="User Profile Placeholder" className="profile-picture"/>
                     <div className="user-info">
-                        <h2 className='user-info-title'>User Information</h2>
                         <p>Username: {userData.username}</p>
                         <p>Email: {userData.email}</p>
                     </div>
+                </div>
                     <div className="user-reviews">
                         <h3 className='reviews-title'>Reviews</h3>
                         {userData.reviews.length > 0 ? (

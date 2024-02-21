@@ -661,6 +661,7 @@ nav a:hover {
 }
 
 .user-info-title {
+  text-align: center;
   font-size: 35px;
   align-items: center;
   display: flex;
@@ -683,26 +684,51 @@ nav a:hover {
   margin: 20px;
 }
 
+.user-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-picture {
+  opacity: 0.7;
+  width: 350px;
+  height: 350px;
+  border-radius: 0%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  margin-bottom: 20px;
+}
+
 .user-profile-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
-  max-width: 1200px;
 }
 
 .user-info {
-  flex-basis: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .user-reviews {
-  flex-basis: 40%;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 60%;
   overflow: auto;
+}
+
+.user-info-container, .user-reviews {
+  flex-grow: 1;
+  max-width: 25%;
 }
 
 .reviews-list {
   list-style-type: none;
   padding: 0;
-  max-height: 460px;
+  max-height: 435px;
   overflow-y: auto;
 }
 
