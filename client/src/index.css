@@ -660,31 +660,6 @@ nav a:hover {
   background-color: #34495e;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .user-info-title {
   font-size: 35px;
   align-items: center;
@@ -712,7 +687,7 @@ nav a:hover {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  max-width: 1200px; /* Adjust based on your layout preference */
+  max-width: 1200px;
 }
 
 .user-info {
@@ -727,16 +702,16 @@ nav a:hover {
 .reviews-list {
   list-style-type: none;
   padding: 0;
-  max-height: 500px;
+  max-height: 460px;
   overflow-y: auto;
 }
 
 .review-item {
-  border: 1px solid #867272; /* Adds a light gray border around each review */
-  padding: 15px; /* Adds padding inside the border for some spacing around the review content */
-  margin-bottom: 20px; /* Ensures there's space between successive review items */
-  background-color: #262424; /* Optional: adds a background color to each review item */
-  border-radius: 5px; /* Optional: adds rounded corners to the border */
+  border: 1px solid #867272;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #262424;
+  border-radius: 5px;
 }
 
 .review-item:hover {
@@ -752,6 +727,7 @@ nav a:hover {
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .delete-review-button:hover {
