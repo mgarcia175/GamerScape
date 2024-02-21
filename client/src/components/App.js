@@ -17,6 +17,7 @@ import GameDetails from './GameDetails';
 import ReviewForm from './ReviewForm';
 import CreateGame from "./CreateGame";
 import CreatedGameCard from "./CreatedGameCard";
+import EditReviewForm from "./EditReviewForm"
 // Components
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='/games/:gameId' element={<GameDetails />} />
             <Route path="/review/:gameId" element={<ReviewForm />} />
+            <Route path="/edit-review/:reviewId" element={<EditReviewForm />} />
             <Route path="/create-game" element={<CreateGame />} />
             <Route path='/created-game' element={<CreatedGameCard />} />
 

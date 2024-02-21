@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function Home() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetch('/user_profile', {
@@ -57,8 +61,8 @@ function Home() {
         });
     };
 
-    const handleEditReview = () => {
-
+    const handleEditReview = (reviewId) => {
+        navigate(`/edit-review/${reviewId}`);
     }
 
     return (

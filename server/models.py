@@ -17,6 +17,9 @@ class User(db.Model, SerializerMixin):
     reviews = db.relationship('Review', back_populates='user')
     games = db.relationship('Game', secondary='reviews', back_populates='users', overlaps="reviews")
 
+    serialize_rules = ('-password_hash',)
+
+
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
@@ -49,11 +52,14 @@ class Game(db.Model, SerializerMixin):
                               back_populates='game')
     users = db.relationship('User', secondary='reviews', back_populates='games', overlaps="reviews")
 
+    serialize_rules = ('-reviews', '-users')
+
+
     def __repr__(self):
         return f'<Game Title: {self.title}>\n'
 
 # Review Model
-class Review(db.Model):
+class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -72,6 +78,8 @@ class Review(db.Model):
 
     # Relationship with Game
     game = db.relationship('Game', back_populates='reviews', overlaps="games,users")
+
+    serialize_rules = ('-user.reviews', '-game.reviews')
 
     def __repr__(self):
         return f"<{self.game} | Difficulty: {self.difficulty} | Graphics: {self.graphics} | Gameplay: {self.gameplay} | Storyline: {self.storyline} | Review Content: {self.review}>\n"

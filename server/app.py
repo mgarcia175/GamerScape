@@ -154,6 +154,23 @@ def submit_review():
         db.session.rollback()
         return jsonify({'error': 'Review submission failed', 'details': str(e)}), 500
 
+@app.route('/reviews/<int:reviewId>', methods=['PATCH'])
+def update_review(reviewId):
+    review_data = request.get_json()
+    review = Review.query.get(reviewId)
+    if not review:
+        return jsonify({'error': 'Review not found'}), 404
+
+    # Update the review with new data
+    review.difficulty = review_data.get('difficulty', review.difficulty)
+    review.graphics = review_data.get('graphics', review.graphics)
+    review.gameplay = review_data.get('gameplay', review.gameplay)
+    review.storyline = review_data.get('storyline', review.storyline)
+    review.review = review_data.get('review', review.review)
+
+    db.session.commit()
+
+    return jsonify(review.to_dict()), 200
 
 @app.route('/user_profile', methods=['GET'])
 def get_user_profile():
