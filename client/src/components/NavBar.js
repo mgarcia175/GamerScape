@@ -9,7 +9,7 @@ function NavBar() {
         <li><Link to="/games">Games</Link></li>
         <li><Link to="/login">Log In</Link></li>
 
-        {/* This is for more navigation paths */}
+        {/* For more navigation paths */}
       </ul>
     </nav>
   );
