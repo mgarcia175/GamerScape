@@ -48,10 +48,11 @@ const EditReviewForm = () => {
   });
 
   return (
-    <div className="edit-review-form-container">
-      <h2>Edit Review</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="difficulty">Difficulty (1-5):</label>
+    <div>
+      <h1>Edit Review</h1>
+
+      <form onSubmit={formik.handleSubmit} className="review-input-container">
+        <label htmlFor="difficulty" className='review-info-section'>Difficulty (1-5):</label>
         <input
           id="difficulty"
           name="difficulty"
@@ -59,12 +60,16 @@ const EditReviewForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.difficulty}
+          className='review-input'
         />
         {formik.touched.difficulty && formik.errors.difficulty ? (
-          <div>{formik.errors.difficulty}</div>
+          <div className="error-message">{formik.errors.difficulty}</div>
         ) : null}
 
-        <label htmlFor="graphics">Graphics (1-5):</label>
+
+
+
+        <label htmlFor="graphics" className='review-info-section'>Graphics (1-5):</label>
         <input
           id="graphics"
           name="graphics"
@@ -72,12 +77,16 @@ const EditReviewForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.graphics}
+          className='review-input'
         />
         {formik.touched.graphics && formik.errors.graphics ? (
-          <div>{formik.errors.graphics}</div>
+          <div className="error-message">{formik.errors.graphics}</div>
         ) : null}
 
-        <label htmlFor="gameplay">Gameplay (1-5):</label>
+
+
+
+        <label htmlFor="gameplay" className='review-info-section'>Gameplay (1-5):</label>
         <input
           id="gameplay"
           name="gameplay"
@@ -85,12 +94,15 @@ const EditReviewForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.gameplay}
+          className='review-input'
         />
         {formik.touched.gameplay && formik.errors.gameplay ? (
-          <div>{formik.errors.gameplay}</div>
+          <div className="error-message">{formik.errors.gameplay}</div>
         ) : null}
 
-        <label htmlFor="storyline">Storyline (1-5):</label>
+
+
+        <label htmlFor="storyline" className='review-info-section'>Storyline (1-5):</label>
         <input
           id="storyline"
           name="storyline"
@@ -98,24 +110,27 @@ const EditReviewForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.storyline}
+          className='review-input'
         />
         {formik.touched.storyline && formik.errors.storyline ? (
-          <div>{formik.errors.storyline}</div>
+          <div className="error-message">{formik.errors.storyline}</div>
         ) : null}
 
-        <label htmlFor="review">Review:</label>
+
+
+        <label htmlFor="review" className='review-info-section'>Review:</label>
         <textarea
           id="review"
           name="review"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.review}
-        />
-        {formik.touched.review && formik.errors.review ? <div>{formik.errors.review}</div> : null}
+          className="edit-review-textarea"
+          />
+        {formik.touched.review && formik.errors.review ? 
+          <div className="error-message">{formik.errors.review}</div> : null}
 
-        <button type="submit" disabled={formik.isSubmitting}>
-          Update Review
-        </button>
+        <button type="submit" className='review-submit-button' disabled={formik.isSubmitting}>Update Review</button>
       </form>
     </div>
   );
