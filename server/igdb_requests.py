@@ -36,7 +36,7 @@ def fetch_games():
                 cover_id = game.get('cover', {}).get('image_id')
                 game['cover_url'] = f"https://images.igdb.com/igdb/image/upload/t_cover_big/{cover_id}.jpg" if cover_id else None
 
-            return games_data
+            return games_data     
         else:
             print(f"Oh no. Looks like something went wrong. Status code: {response.status_code}, Details: {response.text}")
             return None

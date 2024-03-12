@@ -10,7 +10,7 @@ from igdb_requests import fetch_games, fetch_game_details, search_igdb_games, fe
 # Load environment variables
 load_dotenv()
 
-# Bcrypt initialization (if not already done in config.py)
+# Bcrypt initialization
 bcrypt = Bcrypt(app)
 
 # Secret key for session management
