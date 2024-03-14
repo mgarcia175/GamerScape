@@ -29,10 +29,15 @@ function handleLeaveAReview() {
     navigate(`/review/${game.id}`, { state: { gameId: game.id, userCreated: false } })
 }
 
+function handleAddToFavorites() {
+    console.log("pressed!")
+}
+
 return (
     <div id='see-more-game-container'>
         <div className='see-more-game-details-container'>
             <div id='review-button'>
+                <button onClick={handleAddToFavorites}>Add to Favorites</button>
                 <button onClick={handleLeaveAReview}>Leave a Review</button>
             </div>
             {game ? (

@@ -19,8 +19,6 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log('Login submitted with:', values);
-
       navigate('/');
     },
   });

@@ -4,10 +4,16 @@ from config import db, bcrypt
 from sqlalchemy.orm import validates
 from datetime import datetime
 
+#Favorites Model
+favorites = db.Table('favorites',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('game_id', db.Integer, db.ForeignKey('games.id'), primary_key=True)
+)
+
 # User Model
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(40), unique=True, nullable=False)
@@ -16,6 +22,7 @@ class User(db.Model, SerializerMixin):
     # Relationships
     reviews = db.relationship('Review', back_populates='user')
     games = db.relationship('Game', secondary='reviews', back_populates='users', overlaps="reviews")
+    favorited_games = db.relationship('Game', secondary=favorites, back_populates='favorited_by_users')
 
     serialize_rules = ('-password_hash',)
 
@@ -50,7 +57,9 @@ class Game(db.Model, SerializerMixin):
     # Relationship with Review
     reviews = db.relationship('Review', 
                               back_populates='game')
-    users = db.relationship('User', secondary='reviews', back_populates='games', overlaps="reviews")
+    users = db.relationship('User', 
+                            secondary='reviews', back_populates='games', overlaps="reviews")
+    favorited_by_users = db.relationship('User', secondary=favorites, back_populates='favorited_games')
 
     serialize_rules = ('-reviews', '-users')
 
@@ -83,3 +92,4 @@ class Review(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<{self.game} | Difficulty: {self.difficulty} | Graphics: {self.graphics} | Gameplay: {self.gameplay} | Storyline: {self.storyline} | Review Content: {self.review}>\n"
+
