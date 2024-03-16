@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -11,6 +11,7 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -18,8 +19,32 @@ const Login = () => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: values => {
-      navigate('/');
+    onSubmit: (values, { setSubmitting }) => {
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Login failed');
+        }
+        return response.json();
+      })
+      .then(data => {
+        navigate('/');
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
+        setLoginError('Failed to log in. Please check your credentials.');
+      })
+      .finally(() => setSubmitting(false));
     },
   });
 
@@ -27,6 +52,8 @@ const Login = () => {
     <div id="login-container">
       <form onSubmit={formik.handleSubmit}>
         <h2 id='login-title'>Login</h2>
+        {}
+        {loginError && <div className="login-error">{loginError}</div>}
         <div>
           <label htmlFor="username">Username: </label>
           <input

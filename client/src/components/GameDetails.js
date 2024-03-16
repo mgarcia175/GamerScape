@@ -7,7 +7,6 @@ function GameDetails() {
     const { gameId } = useParams();
     const [game, setGame] = useState(null);
 
-
     useEffect(() => {
         fetch(`/api/games/${gameId}`)
             .then(response => {
@@ -30,8 +29,33 @@ function handleLeaveAReview() {
 }
 
 function handleAddToFavorites() {
-    console.log("pressed!")
+    const isUserCreated = game.userCreated;
+
+    const favoriteData = {
+        gameId: game.id,
+        isUserCreated: isUserCreated
+    };
+
+    fetch('/api/favorites', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(favoriteData),
+        credentials: 'include',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add game to favorites');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Game added to favorites successfully:', data);
+    })
+    .catch(error => console.error('Error adding game to favorites:', error));
 }
+
 
 return (
     <div id='see-more-game-container'>

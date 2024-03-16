@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
-from models import User, Review, Game
+from models import User, Review, Game, favorites
 from config import app, db, bcrypt
 import requests
 from igdb_requests import fetch_games, fetch_game_details, search_igdb_games, fetch_igdb_game_title
@@ -17,7 +17,38 @@ bcrypt = Bcrypt(app)
 app.secret_key = os.getenv('SECRET_KEY')
 
 
+@app.route('/api/favorites', methods=['POST'])
+def add_to_favorites():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User not logged in'}), 401
 
+    data = request.get_json()
+    gameId = data.get('gameId')
+    isUserCreated = data.get('isUserCreated', False)
+
+    user = User.query.get(user_id)
+    game = Game.query.get(gameId) if isUserCreated else None
+    igdb_game_id = gameId if not isUserCreated else None
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    if isUserCreated and not game:
+        return jsonify({'error': 'Game not found'}), 404
+
+    existing_favorite = favorites.query.filter_by(user_id=user_id, game_id=gameId if game else None, igdb_game_id=igdb_game_id if not game else None).first()
+    if existing_favorite:
+        return jsonify({'message': 'Game already in favorites'}), 409
+
+    new_favorite = favorites(user_id=user_id, game_id=game.id if game else None, igdb_game_id=igdb_game_id if igdb_game_id else None)
+    db.session.add(new_favorite)
+    try:
+        db.session.commit()
+        return jsonify({'message': 'Game added to favorites successfully'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Failed to add game to favorites', 'details': str(e)}), 500
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -88,19 +119,26 @@ def game_details(game_id):
     game_detail = fetch_game_details(game_id)
     return jsonify(game_detail)
 
+
+
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data.get('email')
+    username = data.get('username')
     password = data.get('password')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(username=username).first()
 
     if user and bcrypt.check_password_hash(user.password_hash, password):
         session['user_id'] = user.id
+        print("Session after login:", session)
         return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
     else:
         return jsonify({'message': 'Invalid email or password'}), 401
+
+
+
 
 @app.route('/check_login_status')
 def check_login_status():
@@ -175,6 +213,7 @@ def update_review(reviewId):
 @app.route('/user_profile', methods=['GET'])
 def get_user_profile():
     user_id = session.get('user_id')
+
     if not user_id:
         return jsonify({'message': 'User not logged in'}), 401
 
