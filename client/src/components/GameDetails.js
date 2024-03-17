@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import ScreenshotGallery from './ScreenshotGallery';
+
+import { addFavoriteAsync } from '../redux/actions';
 
 function GameDetails() {
     const navigate = useNavigate()
     const { gameId } = useParams();
     const [game, setGame] = useState(null);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetch(`/api/games/${gameId}`)
@@ -29,31 +34,16 @@ function handleLeaveAReview() {
 }
 
 function handleAddToFavorites() {
-    const isUserCreated = game.userCreated;
 
-    const favoriteData = {
-        gameId: game.id,
-        isUserCreated: isUserCreated
-    };
+    let favoriteData = {};
 
-    fetch('/api/favorites', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(favoriteData),
-        credentials: 'include',
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to add game to favorites');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Game added to favorites successfully:', data);
-    })
-    .catch(error => console.error('Error adding game to favorites:', error));
+    if (game.userCreated) {
+        favoriteData = { game_id: game.id };
+    } else {
+        favoriteData = { igdb_game_id: game.id };
+    }
+
+    dispatch(addFavoriteAsync(favoriteData));
 }
 
 

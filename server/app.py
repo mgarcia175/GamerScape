@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
-from models import User, Review, Game, favorites
+from models import User, Review, Game, Favorite
 from config import app, db, bcrypt
 import requests
 from igdb_requests import fetch_games, fetch_game_details, search_igdb_games, fetch_igdb_game_title
@@ -19,36 +19,51 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/api/favorites', methods=['POST'])
 def add_to_favorites():
+    data = request.get_json()
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'User not logged in'}), 401
 
-    data = request.get_json()
-    gameId = data.get('gameId')
-    isUserCreated = data.get('isUserCreated', False)
+    game_id = data.get('game_id')
+    igdb_game_id = data.get('igdb_game_id')
 
-    user = User.query.get(user_id)
-    game = Game.query.get(gameId) if isUserCreated else None
-    igdb_game_id = gameId if not isUserCreated else None
-
-    if not user:
-        return jsonify({'error': 'User not found'}), 404
-
-    if isUserCreated and not game:
-        return jsonify({'error': 'Game not found'}), 404
-
-    existing_favorite = favorites.query.filter_by(user_id=user_id, game_id=gameId if game else None, igdb_game_id=igdb_game_id if not game else None).first()
-    if existing_favorite:
-        return jsonify({'message': 'Game already in favorites'}), 409
-
-    new_favorite = favorites(user_id=user_id, game_id=game.id if game else None, igdb_game_id=igdb_game_id if igdb_game_id else None)
-    db.session.add(new_favorite)
     try:
+        favorite = Favorite(
+            user_id=user_id,
+            game_id=game_id if game_id else None,
+            igdb_game_id=igdb_game_id if igdb_game_id else None
+        )
+        db.session.add(favorite)
         db.session.commit()
-        return jsonify({'message': 'Game added to favorites successfully'}), 201
+        return jsonify({'message': 'Game added to favorites'}), 201
     except Exception as e:
+        print(f"Error adding to favorites: {e}")
         db.session.rollback()
-        return jsonify({'error': 'Failed to add game to favorites', 'details': str(e)}), 500
+        return jsonify({'error': 'Failed to add to favorites'}), 500
+
+@app.route('/api/favorites', methods=['GET'])
+def get_favorites():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User not logged in'}), 401
+
+    try:
+        favorites = Favorite.query.filter_by(user_id=user_id).all()
+        # Manually constructing the dictionary to avoid recursion
+        favorites_data = []
+        for favorite in favorites:
+            favorite_dict = {
+                'user_id': favorite.user_id,
+                'game_id': favorite.game_id,
+                'igdb_game_id': favorite.igdb_game_id
+                # You might want to add more fields here
+            }
+            favorites_data.append(favorite_dict)
+
+        return jsonify(favorites_data), 200
+    except Exception as e:
+        print(f"Error fetching favorites: {e}")
+        return jsonify({'error': 'Failed to fetch favorites'}), 500
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -119,9 +134,6 @@ def game_details(game_id):
     game_detail = fetch_game_details(game_id)
     return jsonify(game_detail)
 
-
-
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -136,9 +148,6 @@ def login():
         return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
     else:
         return jsonify({'message': 'Invalid email or password'}), 401
-
-
-
 
 @app.route('/check_login_status')
 def check_login_status():

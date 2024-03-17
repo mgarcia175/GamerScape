@@ -5,10 +5,20 @@ from sqlalchemy.orm import validates
 from datetime import datetime
 
 #Favorites Model
-favorites = db.Table('favorites',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('game_id', db.Integer, db.ForeignKey('games.id'), primary_key=True)
-)
+class Favorite(db.Model, SerializerMixin):
+    __tablename__ = 'favorites'
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=True)
+    igdb_game_id = db.Column(db.String, nullable=True)
+    user = db.relationship('User', back_populates='favorited_games')
+    game = db.relationship('Game', back_populates='favorited_by_users')
+    
+    user = db.relationship('User', back_populates='favorited_games')
+    game = db.relationship('Game', back_populates='favorited_by_users')
+
+    def __repr__(self):
+        return f'<Favorite user_id={self.user_id}, game_id={self.game_id if self.game_id else None}, igdb_game_id={self.igdb_game_id if self.igdb_game_id else None}>'
 
 # User Model
 class User(db.Model, SerializerMixin):
@@ -22,7 +32,7 @@ class User(db.Model, SerializerMixin):
     # Relationships
     reviews = db.relationship('Review', back_populates='user')
     games = db.relationship('Game', secondary='reviews', back_populates='users', overlaps="reviews")
-    favorited_games = db.relationship('Game', secondary=favorites, back_populates='favorited_by_users')
+    favorited_games = db.relationship('Favorite', back_populates='user')
 
     serialize_rules = ('-password_hash',)
 
@@ -59,7 +69,8 @@ class Game(db.Model, SerializerMixin):
                               back_populates='game')
     users = db.relationship('User', 
                             secondary='reviews', back_populates='games', overlaps="reviews")
-    favorited_by_users = db.relationship('User', secondary=favorites, back_populates='favorited_games')
+    favorited_by_users = db.relationship('Favorite', 
+                                         back_populates='game')
 
     serialize_rules = ('-reviews', '-users')
 
