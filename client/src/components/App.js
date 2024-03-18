@@ -8,7 +8,6 @@ import {
 
 // Components
 import Login from './Login';
-import UserProfilePage from './UserProfilePage';
 import Signup from './Signup';
 import Home from './Home';
 import NavBar from './NavBar';
@@ -30,7 +29,6 @@ function App() {
             <Route exact path='/' element={<Home />} />
             <Route path='/games' element={<Games />} />
             <Route path='/login' element={<Login />} />
-            <Route path="/profile" element={<UserProfilePage />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/games/:gameId' element={<GameDetails />} />
             <Route path="/review/:gameId" element={<ReviewForm />} />

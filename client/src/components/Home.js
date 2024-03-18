@@ -1,15 +1,16 @@
-import GamerProfilePlaceholder from '../images/GamerScape Profile Placeholder.webp';
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFavoritesAsync } from '../redux/actions';
+import GamerProfilePlaceholder from '../images/GamerScape Profile Placeholder.webp';
 
 function Home() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    const favorites = useSelector(state => state.favorites.favorites); // Access favorites from Redux
 
     useEffect(() => {
         fetch('/user_profile', {
@@ -32,15 +33,9 @@ function Home() {
             setError('Failed to fetch user profile. Please try again later.');
             setLoading(false);
         });
-    }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+        dispatch(fetchFavoritesAsync());
+    }, [dispatch]);
 
     const handleDeleteReview = (reviewId) => {
         fetch(`/api/reviews/${reviewId}`, {
@@ -82,6 +77,12 @@ function Home() {
                     </div>
                 </div>
                     <div className="user-reviews">
+                    <h3>Favorites</h3>
+                        <ul>
+                            {favorites.map(favorite => (
+                            <li key={favorite.id}>{favorite.name} (Game ID: {favorite.igdb_game_id || favorite.game_id})</li>
+                            ))}
+                        </ul>
                         <h3 className='reviews-title'>Reviews</h3>
                         {userData.reviews.length > 0 ? (
                         <ul className="reviews-list">
