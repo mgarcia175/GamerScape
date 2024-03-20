@@ -7,8 +7,9 @@ from datetime import datetime
 #Favorites Model
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
-    
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+
+    id = db.Column(db.Integer, primary_key=True)  # Add a unique primary key
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=True)
     igdb_game_id = db.Column(db.String, nullable=True)
 

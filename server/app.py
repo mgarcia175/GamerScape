@@ -45,6 +45,12 @@ def add_to_favorites():
 
 
 
+
+
+
+
+
+
 @app.route('/api/favorites', methods=['GET'])
 def get_favorites():
     user_id = session.get('user_id')
@@ -53,12 +59,13 @@ def get_favorites():
 
     try:
         favorites = Favorite.query.filter_by(user_id=user_id).all()
-        print(favorites)
+        print(f"All Favorites:", favorites)
 
         favorites_data = []
         for favorite in favorites:
+            print(f"Printing each favorite:",favorite)
 
-            game_id = favorite.igdb_game_id
+            game_id = favorite.game_id or favorite.igdb_game_id
             favorites_data.append({'Game Id': game_id})
 
         return jsonify(favorites_data), 200
@@ -68,12 +75,9 @@ def get_favorites():
 
 
 
+#{title : thisgame}
 
-
-
-
-
-
+#game.title
 
 
 
