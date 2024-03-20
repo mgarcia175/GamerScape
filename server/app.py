@@ -52,7 +52,7 @@ def get_favorites():
         return jsonify({'error': 'User not logged in'}), 401
 
     try:
-        favorites = Favorite.query.all()
+        favorites = Favorite.query.filter_by(user_id=user_id).all()
         print(favorites)
 
         favorites_data = []
