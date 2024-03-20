@@ -82,7 +82,7 @@ function Home() {
                             <ul>
                                 {favorites.map((favorite, index) => (
                                     <li key={index}>
-                                    {favorite.name ? `${favorite.name} (Game ID: ${favorite.game_id || favorite.igdb_game_id})` : `Game ID: ${favorite.game_id || favorite.igdb_game_id || 'Undefined'}`}
+                                    {`Game Title: ${favorite.name} | ID: ${favorite.igdb_game_id}`}
                                     </li>
                                 ))}
                             </ul>

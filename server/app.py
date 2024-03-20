@@ -20,28 +20,27 @@ app.secret_key = os.getenv('SECRET_KEY')
 @app.route('/api/favorites', methods=['POST'])
 def add_to_favorites():
     data = request.get_json()
-    print("Received data for adding to favorites:", data)
-
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'User not logged in'}), 401
-
-    game_id = data.get('game_id')
-    igdb_game_id = data.get('igdb_game_id')
-
+    
     try:
         favorite = Favorite(
             user_id=user_id,
-            game_id=game_id if game_id else None,
-            igdb_game_id=igdb_game_id if igdb_game_id else None
+            igdb_game_id=data.get('igdb_game_id'),
+            title=data.get('title'),
         )
         db.session.add(favorite)
         db.session.commit()
         return jsonify({'message': 'Game added to favorites'}), 201
     except Exception as e:
-        print(f"Error adding to favorites: {e}")
         db.session.rollback()
         return jsonify({'error': 'Failed to add to favorites'}), 500
+
+
+
+
+
 
 
 
@@ -59,14 +58,23 @@ def get_favorites():
 
     try:
         favorites = Favorite.query.filter_by(user_id=user_id).all()
-        print(f"All Favorites:", favorites)
-
         favorites_data = []
         for favorite in favorites:
-            print(f"Printing each favorite:",favorite)
+            game_info = {}
+            if favorite.game_id:
+                game = Game.query.get(favorite.game_id)
+                print(game)
+                if game:
+                    game_info = {
+                        'name': game.title, 
+                        'game_id': game.id,
+                    }
+            elif favorite.igdb_game_id:
+                game_info = {'name': favorite.title, 'igdb_game_id': favorite.igdb_game_id}
+                print("fav info:", favorite)
 
-            game_id = favorite.game_id or favorite.igdb_game_id
-            favorites_data.append({'Game Id': game_id})
+            if game_info:
+                favorites_data.append(game_info)
 
         return jsonify(favorites_data), 200
     except Exception as e:
@@ -75,9 +83,14 @@ def get_favorites():
 
 
 
-#{title : thisgame}
 
-#game.title
+
+
+
+
+
+
+
 
 
 
