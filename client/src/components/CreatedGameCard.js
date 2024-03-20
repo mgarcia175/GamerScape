@@ -12,12 +12,10 @@ const CreatedGameCard = () => {
   const dispatch = useDispatch();
 
 const handleLeaveReview = () => {
-  console.log(game)
   navigate(`/review/${game.game_id}`, { state: { gameId: game.game_id, userCreated: true } } );
 }
 
 function handleAddToFavorites() {
-  console.log(game)
   let favoriteData = {};
 
   if (game.userCreated) {
@@ -27,6 +25,8 @@ function handleAddToFavorites() {
   }
 
   dispatch(addFavoriteAsync(favoriteData));
+  console.log(favoriteData)
+  navigate(`/`)
 }
 
   return (

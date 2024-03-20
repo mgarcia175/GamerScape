@@ -727,6 +727,32 @@ nav a:hover {
   align-items: flex-start;
 }
 
+.favorites-container, .user-info-container {
+  width: 80%;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.favorites-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.favorites-container ul {
+  padding: 0;
+  list-style: none;
+}
+
+.favorites-container li {
+  margin: 5px 0;
+}
+
+.favorites-title {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
 .user-reviews {
   align-items: center;
   flex-grow: 1;

@@ -31,23 +31,18 @@ export const removeFavorite = gameId => ({
 });
 
 // Thunk aactions
-export const fetchFavoritesAsync = () => dispatch => {
+export const fetchFavoritesAsync = () => async (dispatch) => {
   dispatch(fetchFavoritesRequest());
-  fetch('/api/favorites', {
-    credentials: 'include',
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to fetch favorites');
-    }
-    return response.json();
-  })
-  .then(data => {
-    dispatch(fetchFavoritesSuccess(data));
-  })
-  .catch(error => {
+  try {
+    const response = await fetch('/api/favorites', { credentials: 'include' });
+    if (!response.ok) throw new Error('Failed to fetch favorites');
+    const favorites = await response.json();
+
+    
+    dispatch(fetchFavoritesSuccess(favorites));
+  } catch (error) {
     dispatch(fetchFavoritesFailure(error.toString()));
-  });
+  }
 };
 
 export const addFavoriteAsync = favoriteData => dispatch => {
@@ -68,6 +63,7 @@ export const addFavoriteAsync = favoriteData => dispatch => {
   })
   .then(() => {
     dispatch(fetchFavoritesAsync());
+
   })
   .catch(error => {
     console.error('Error adding game to favorites:', error);

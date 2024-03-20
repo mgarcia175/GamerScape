@@ -62,6 +62,7 @@ function Home() {
     const handleEditReview = (reviewId) => {
         navigate(`/edit-review/${reviewId}`);
     }
+    
 
     return (
         <div className="home-container">
@@ -76,13 +77,17 @@ function Home() {
                         <p>Email: {userData.email}</p>
                     </div>
                 </div>
+                        <div className="favorites-container">
+                            <h3 className='favorites-title'>Favorites</h3>
+                            <ul>
+                                {favorites.map((favorite, index) => (
+                                    <li key={index}>
+                                    {favorite.name ? `${favorite.name} (Game ID: ${favorite.game_id || favorite.igdb_game_id})` : `Game ID: ${favorite.game_id || favorite.igdb_game_id || 'Undefined'}`}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     <div className="user-reviews">
-                    <h3>Favorites</h3>
-                        <ul>
-                            {favorites.map(favorite => (
-                            <li key={favorite.id}>{favorite.name} (Game ID: {favorite.igdb_game_id || favorite.game_id})</li>
-                            ))}
-                        </ul>
                         <h3 className='reviews-title'>Reviews</h3>
                         {userData.reviews.length > 0 ? (
                         <ul className="reviews-list">

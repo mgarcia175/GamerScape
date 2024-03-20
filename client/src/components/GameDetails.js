@@ -34,17 +34,16 @@ function handleLeaveAReview() {
 }
 
 function handleAddToFavorites() {
-
     let favoriteData = {};
-
+  
     if (game.userCreated) {
-        favoriteData = { game_id: game.id };
+      favoriteData.game_id = game.game_id;
     } else {
-        favoriteData = { igdb_game_id: game.id };
+        favoriteData.igdb_game_id = game.id;
     }
-
     dispatch(addFavoriteAsync(favoriteData));
-}
+    navigate(`/`)
+  }
 
 
 return (

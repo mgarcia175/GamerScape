@@ -13,6 +13,7 @@ const initialState = {
 };
 
 function favoritesReducer(state = initialState, action) {
+
   switch (action.type) {
     case FETCH_FAVORITES_REQUEST:
       return { ...state, loading: true };

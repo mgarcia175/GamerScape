@@ -11,9 +11,7 @@ class Favorite(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=True)
     igdb_game_id = db.Column(db.String, nullable=True)
-    user = db.relationship('User', back_populates='favorited_games')
-    game = db.relationship('Game', back_populates='favorited_by_users')
-    
+
     user = db.relationship('User', back_populates='favorited_games')
     game = db.relationship('Game', back_populates='favorited_by_users')
 
