@@ -23,10 +23,11 @@ def add_to_favorites():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'User not logged in'}), 401
-    
+
     try:
         favorite = Favorite(
             user_id=user_id,
+            game_id=data.get('game_id'),
             igdb_game_id=data.get('igdb_game_id'),
             title=data.get('title'),
         )

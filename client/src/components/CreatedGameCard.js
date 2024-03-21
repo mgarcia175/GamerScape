@@ -16,17 +16,15 @@ const handleLeaveReview = () => {
 }
 
 function handleAddToFavorites() {
-  let favoriteData = {};
+  let favoriteData = {
+      game_id: game.game_id,
+      title: game.title,
+  };
 
-  if (game.userCreated) {
-    favoriteData.game_id = game.game_id;
-  } else {
-      favoriteData.igdb_game_id = game.id;
-  }
+  console.log(game)
 
   dispatch(addFavoriteAsync(favoriteData));
-  console.log(favoriteData)
-  navigate(`/`)
+  navigate(`/`);
 }
 
   return (

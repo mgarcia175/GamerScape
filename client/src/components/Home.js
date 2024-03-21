@@ -62,7 +62,7 @@ function Home() {
     const handleEditReview = (reviewId) => {
         navigate(`/edit-review/${reviewId}`);
     }
-    
+
 
     return (
         <div className="home-container">
@@ -82,10 +82,10 @@ function Home() {
                             <ul>
                                 {favorites.map((favorite, index) => (
                                     <li key={index}>
-                                    {`Game Title: ${favorite.name} | ID: ${favorite.igdb_game_id}`}
+                                    {<p>Game Title: {favorite.name} ID: {favorite.igdb_game_id || favorite.game_id}</p>}
                                     </li>
                                 ))}
-                            </ul>
+                            </ul>{console.log(favorites)}
                         </div>
                     <div className="user-reviews">
                         <h3 className='reviews-title'>Reviews</h3>
