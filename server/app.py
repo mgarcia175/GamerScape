@@ -59,7 +59,6 @@ def get_favorites():
                     }
             elif favorite.igdb_game_id:
                 game_info = {'name': favorite.title, 'igdb_game_id': favorite.igdb_game_id}
-                print("fav info:", favorite)
 
             if game_info:
                 favorites_data.append(game_info)

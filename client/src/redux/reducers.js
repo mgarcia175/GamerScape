@@ -19,10 +19,15 @@ function favoritesReducer(state = initialState, action) {
       return { ...state, loading: true };
     case FETCH_FAVORITES_SUCCESS:
       return { ...state, loading: false, favorites: action.payload, error: '' };
-    case FETCH_FAVORITES_FAILURE:
-      return { ...state, loading: false, error: action.payload };
     case ADD_FAVORITE:
       return { ...state, favorites: [...state.favorites, action.payload] };
+
+
+
+
+      
+    case FETCH_FAVORITES_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     case REMOVE_FAVORITE:
       return { ...state, favorites: state.favorites.filter(game => game.id !== action.payload) };
     default:
