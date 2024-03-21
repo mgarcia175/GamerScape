@@ -34,12 +34,10 @@ function handleLeaveAReview() {
 }
 
 function handleAddToFavorites() {
-    console.log(game)
     let favoriteData = {
         igdb_game_id: game.id,
         title: game.name,
     };
-    console.log(favoriteData)
 
     dispatch(addFavoriteAsync(favoriteData));
     navigate(`/`);

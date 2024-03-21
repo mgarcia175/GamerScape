@@ -37,19 +37,6 @@ def add_to_favorites():
         db.session.rollback()
         return jsonify({'error': 'Failed to add to favorites'}), 500
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/api/favorites', methods=['GET'])
 def get_favorites():
     user_id = session.get('user_id')
@@ -80,21 +67,6 @@ def get_favorites():
     except Exception as e:
         print(f"Error fetching favorites: {e}")
         return jsonify({'error': 'Failed to fetch favorites'}), 500
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @app.route('/api/signup', methods=['POST'])
 def signup():

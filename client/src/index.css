@@ -727,30 +727,51 @@ nav a:hover {
   align-items: flex-start;
 }
 
-.favorites-container, .user-info-container {
-  width: 80%;
-  text-align: center;
-  margin: 20px 0;
+.favorite-item {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.favorites-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+.game-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  justify-content: center;
+  
+}
+
+.game-id {
+  font-size: 16px;
+  color: #666;
+}
+
+.favorites-title {
+  justify-content: center;
+  font-size: 35px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .favorites-container ul {
   padding: 0;
-  list-style: none;
+  list-style-type: none;
 }
 
 .favorites-container li {
-  margin: 5px 0;
-}
+  font-size: 20px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  backdrop-filter: blur(5px);
 
-.favorites-title {
-  font-size: 35px;
-  margin-bottom: 10px;
 }
 
 .user-reviews {
@@ -773,11 +794,12 @@ nav a:hover {
 }
 
 .review-item {
+  font-size: 20px;
   border: 1px solid #867272;
   padding: 15px;
   margin-bottom: 20px;
-  background-color: #262424;
   border-radius: 5px;
+  backdrop-filter: blur(5px); /* Blur effect for background */
 }
 
 .review-item:hover {
@@ -786,6 +808,7 @@ nav a:hover {
 }
 
 .delete-review-button {
+  font-size: 20px;
   margin-top: 10px;
   padding: 5px 10px;
   background-color: red;
@@ -802,6 +825,7 @@ nav a:hover {
 }
 
 .edit-review-button {
+  font-size: 20px;
   margin-top: 10px;
   padding: 5px 10px;
   background-color: rgb(21, 95, 244);
